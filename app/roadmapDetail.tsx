@@ -1,6 +1,7 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import ImageViewer from "react-native-image-zoom-viewer";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const imagesMap: Record<string, any> = {
   frontend: require("../assets/images/frontend.png"),
@@ -23,7 +24,7 @@ export default function RoadmapDetail() {
   const images = [{ url: uri }];
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ImageViewer
         imageUrls={images}
         index={0}
@@ -32,7 +33,7 @@ export default function RoadmapDetail() {
         useNativeDriver
         backgroundColor="#000"
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

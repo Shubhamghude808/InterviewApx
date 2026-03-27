@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Roadmaps() {
   const router = useRouter();
@@ -15,7 +16,7 @@ export default function Roadmaps() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Roadmaps</Text>
 
       {items.map((item) => (
@@ -27,7 +28,7 @@ export default function Roadmaps() {
           <Text style={styles.text}>{item.toUpperCase()}</Text>
         </TouchableOpacity>
       ))}
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -35,13 +36,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    marginTop: 20,
-    backgroundColor: "#F5F7FB",
+    backgroundColor: "#F5F7FB", // ✅ soft background
   },
+
   title: {
-    fontSize: 22,
+    fontSize: 26,
     fontWeight: "bold",
     marginBottom: 20,
+    color: "#1A1A1A",
   },
   card: {
     backgroundColor: "#fff",
