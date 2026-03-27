@@ -1,21 +1,22 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
   const router = useRouter();
 
-  const topics = [
-    "java",
-    "git",
-    "testng",
-    "selenium",
-    "playright",
-    "cucumber",
-    "typescript/javascript",
-    "programs",
-    "roadmaps",
-  ];
+  const topics = 
+    ["Programs Coding Round Code Panic: The I Know This… Why Can’t I Solve It? Survival Guide",
+    "AI Knows Everything  Will I Be Replaced… or Just Reviewing Its Mistakes?",
+    "Playwright Panic",
+     "TypeScript Trouble",
+     "Selenium Struggles",
+     "Java Jitters",
+     "BDD Cucumber TestNG - its Buisness",
+     "Git Happens: The 'Oh No, What Did I Just Delete?' Survival Guide",
+     "roadmaps",
+    ];
+ 
 
   // ✅ Clean handler
   const handlePress = (topic: string) => {
