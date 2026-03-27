@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function FeedbackScreen() {
   const [email, setEmail] = useState("");
@@ -38,7 +39,7 @@ export default function FeedbackScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Feedback</Text>
 
       <TextInput
@@ -60,7 +61,7 @@ export default function FeedbackScreen() {
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -68,14 +69,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    marginTop: 20,
-    backgroundColor: "#F5F7FB",
+    backgroundColor: "#F5F7FB", // ✅ soft background
   },
 
   title: {
-    fontSize: 22,
+    fontSize: 26,
     fontWeight: "bold",
     marginBottom: 20,
+    color: "#1A1A1A",
   },
 
   input: {

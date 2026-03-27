@@ -8,8 +8,8 @@ export default function TopicScreen() {
   const questions = data[name as keyof typeof data] || [];
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
-      <ScrollView style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
         <Text style={styles.title}>
           {name?.toString().toUpperCase()}
         </Text>
@@ -34,16 +34,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    marginTop:10,
-    backgroundColor: "#F5F7FB", // 👈 light background
+    backgroundColor: "#F5F7FB", // ✅ soft background
   },
 
   title: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "bold",
     marginBottom: 20,
     color: "#1A1A1A",
-    textAlign:"center"
+    textAlign: "center",
   },
 
   card: {
