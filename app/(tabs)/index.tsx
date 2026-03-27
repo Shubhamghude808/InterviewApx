@@ -4,7 +4,31 @@ import { useRouter } from "expo-router";
 export default function HomeScreen() {
   const router = useRouter();
 
-  const topics = ["java", "git", "testng","Selenium","Playright","Cucumber","TypeScript/JavaScript", "Programs"];
+  const topics = [
+    "java",
+    "git",
+    "testng",
+    "selenium",
+    "playright",
+    "cucumber",
+    "typescript/javascript",
+    "programs",
+    "roadmaps",
+  ];
+
+  // Central routing config
+  const routes: Record<string, string> = {
+    roadmaps: "/roadmaps",
+  };
+
+  // handler
+  const handlePress = (topic: string) => {
+  if (topic.toLowerCase() === "roadmaps") {
+    router.push("/roadmaps" as const);
+  } else {
+    router.push(`/topic?name=${topic}` as const);
+  }
+};
 
   return (
     <View style={styles.container}>
@@ -14,7 +38,7 @@ export default function HomeScreen() {
         <TouchableOpacity
           key={topic}
           style={styles.button}
-          onPress={() => router.push(`/topic?name=${topic}`)}
+          onPress={() => handlePress(topic)}
         >
           <Text style={styles.buttonText}>
             {topic.toUpperCase()}
