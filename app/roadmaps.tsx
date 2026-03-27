@@ -4,7 +4,7 @@ import { useRouter } from "expo-router";
 export default function Roadmaps() {
   const router = useRouter();
 
-  const items = ["frontend", "backend", "Quality Assurance"];
+  const items = ["frontend", "backend", "Quality Assurancee"];
 
   const handlePress = (item: string) => {
     if (item.toLowerCase() === "quality assurance") {
