@@ -107,23 +107,14 @@ export default function FeedbackScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+container: {
   flex: 1,
   padding: 20,
   backgroundColor: "#F5F7FB",
   justifyContent: "space-between", // 🔥 key line
-  },
-  content :
-  {
+},
+content: {
 
-  },
-
-contactContainer: {
-  marginTop: 'auto', // This pushes it to the bottom as much as possible
-  paddingTop: 20,
-  paddingBottom: 20, // Adds space so it's not masked by the navigation bar
-  borderTopWidth: 1,
-  borderTopColor: "#DDE3EC",
 },
 
   title: {

@@ -14,6 +14,7 @@ export default function HomeScreen() {
     "Java Jitters",
     "Cucumber Confusion",
     "Git Glitches",
+    "SQL Survivors",
     "Roadmap Ruckus",
   ];
 
