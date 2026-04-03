@@ -417,9 +417,9 @@ export const data =
 ],
 
   "Git Glitches": [
-   {
-    question: "Git quick recap of essential Git commands",
-    answer: " \n1. Setup & Configuration\nSet your username and email (attached to your commits):\n```\n\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"you@example.com\"\nCheck configuration: git config --list```\n\n2. Starting a Project\nInitialize a new local repository: ```\n\ngit init\nClone an existing remote repository: git clone <url>```\n\n3. Basic Workflow (Staging & Committing)\nCheck the state of your working directory: ```\n\ngit status\nAdd a specific file to staging area: git add <file>\nAdd all changed files to staging area: git add .\nCommit staged changes with a message: git commit -m \"Commit message\"\nModify the last commit (or add missed files): git commit --amend -m \"New message\"\n\n```4. Branching\nList all local branches: ```\n\ngit branch\nList all local and remote branches: git branch -a\nCreate a new branch: git branch <branch-name>\nSwitch to a branch (Older way): git checkout <branch-name>\nSwitch to a branch (Newer way): git switch <branch-name>\nCreate and switch to a new branch instantly: git checkout -b <branch-name> OR git switch -c <branch-name>\nDelete a branch: git branch -d <branch-name>\n\n```5. Merging & Rebasing\n```\n\nMerge <branch-name> into your current branch: git merge <branch-name>\nRebase your current branch onto <branch-name>: git rebase <branch-name>\nAbort a conflicting merge/rebase: git merge --abort OR git rebase --abort\n\n```6. Remote Repositories (Syncing)\nList remote connections: ```\n\ngit remote -v\nAdd a remote connection: git remote add origin <url>\nFetch changes from remote (doesn't merge): git fetch origin\nFetch and merge changes from remote: git pull origin <branch-name>\nPush local commits to remote: git push origin <branch-name>\nForce push (use with caution!): git push -f origin <branch-name>\n\n```7. Undoing Changes\nDiscard unstaged changes in a file: ```\n\ngit checkout -- <file> OR git restore <file>\nUnstage a file (keep changes): git reset HEAD <file> OR git restore --staged <file>\nUndo a commit by creating a new reversing commit (Safe): git revert <commit-hash>\nReset to a previous commit, keeping changes unstaged: git reset <commit-hash>\nReset to a previous commit, wiping all changes (Hard): git reset --hard <commit-hash>\n\n```8. Stashing (Temporary Storage)\nTemporarily save modified, tracked files: ```\n\ngit stash\nSave with a specific message: git stash push -m \"message\"\nList all stashes: git stash list\nApply the most recent stash and remove it from stash list: git stash pop\nApply the most recent stash (keep in stash list): git stash apply\nClear all stashes: git stash clear\n\n```9. History & Inspecting\nView commit history: ```\n\ngit log\nView history in a single line: git log --oneline\nShow changes made in a specific commit: git show <commit-hash>\nShow working directory differences not yet staged: git diff\nShow differences between staging and last commit: git diff --staged```"
+  {
+  "question": "Git quick recap of essential Git commands",
+  "answer": "### 1. Setup & Configuration\nSet your username and email (attached to your commits):\n\n```bash\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"you@example.com\"\n// Check configuration\ngit config --list\n```\n\n### 2. Starting a Project\n\n```bash\n// Initialize a new local repository\ngit init\n// Clone an existing remote repository\ngit clone <url>\n```\n\n### 3. Basic Workflow (Staging & Committing)\n\n```bash\n// Check the state of your working directory\ngit status\n// Add a specific file to staging area\ngit add <file>\n// Add all changed files to staging area\ngit add .\n// Commit staged changes with a message\ngit commit -m \"Commit message\"\n// Modify the last commit (or add missed files)\ngit commit --amend -m \"New message\"\n```\n\n### 4. Branching\n\n```bash\n// List all local branches\ngit branch\n// List all local and remote branches\ngit branch -a\n// Create a new branch\ngit branch <branch-name>\n// Switch to a branch\ngit checkout <branch-name> \n// OR (Newer way)\ngit switch <branch-name>\n// Create and switch to a new branch instantly\ngit checkout -b <branch-name> \n// OR\ngit switch -c <branch-name>\n// Delete a branch\ngit branch -d <branch-name>\n```\n\n### 5. Merging & Rebasing\n\n```bash\n// Merge branch into your current branch\ngit merge <branch-name>\n// Rebase your current branch onto <branch-name>\ngit rebase <branch-name>\n// Abort a conflicting merge/rebase\ngit merge --abort \n// OR\ngit rebase --abort\n```\n\n### 6. Remote Repositories (Syncing)\n\n```bash\n// List remote connections\ngit remote -v\n// Add a remote connection\ngit remote add origin <url>\n// Fetch changes from remote (doesn't merge)\ngit fetch origin\n// Fetch and merge changes from remote\ngit pull origin <branch-name>\n// Push local commits to remote\ngit push origin <branch-name>\n// Force push (use with caution!)\ngit push -f origin <branch-name>\n```\n\n### 7. Undoing Changes\n\n```bash\n// Discard unstaged changes in a file\ngit checkout -- <file> \n// OR\ngit restore <file>\n// Unstage a file (keep changes)\ngit reset HEAD <file> \n// OR\ngit restore --staged <file>\n// Undo a commit by creating a new reversing commit (Safe)\ngit revert <commit-hash>\n// Reset to a previous commit, keeping changes unstaged\ngit reset <commit-hash>\n// Reset to a previous commit, wiping all changes (Hard)\ngit reset --hard <commit-hash>\n```\n\n### 8. Stashing (Temporary Storage)\n\n```bash\n// Temporarily save modified, tracked files\ngit stash\n// Save with a specific message\ngit stash push -m \"message\"\n// List all stashes\ngit stash list\n// Apply the most recent stash and remove it from list\ngit stash pop\n// Apply the most recent stash (keep in list)\ngit stash apply\n// Clear all stashes\ngit stash clear\n```\n\n### 9. History & Inspecting\n\n```bash\n// View commit history\ngit log\n// View history in a single line\ngit log --oneline\n// Show changes made in a specific commit\ngit show <commit-hash>\n// Show working directory differences not yet staged\ngit diff\n// Show differences between staging and last commit\ngit diff --staged\n```"
 }
   ],
 
@@ -999,198 +999,138 @@ export const data =
     }
   ],
 
-  "Selenium Struggles":[
-  {
-    "question": "Selenium  Zero to Hero ...!!! quick recap ",
-    "answer": "\n\n```java\nimport org.openqa.selenium.WebDriver;\nimport org.openqa.selenium.chrome.ChromeDriver;\nimport org.openqa.selenium.chrome.ChromeOptions;\n\n// Basic Initialization\nWebDriver driver = new ChromeDriver();\n\n// Initialization with Options (Headless, Incognito, etc.)\nChromeOptions options = new ChromeOptions();\noptions.addArguments(\"--headless\"); // Run without UI\noptions.addArguments(\"--incognito\");\noptions.addArguments(\"start-maximized\");\noptions.addArguments(\"--disable-notifications\"); // Block location/mic prompts\n\nWebDriver driver = new ChromeDriver(options);\n\n// Navigation Commands\ndriver.get(\"https://www.google.com\");\ndriver.navigate().to(\"https://www.google.com\");\ndriver.navigate().back();\ndriver.navigate().forward();\ndriver.navigate().refresh();\n\n// Standard Locators\ndriver.findElement(By.id(\"elementId\"));\ndriver.findElement(By.name(\"elementName\"));\ndriver.findElement(By.className(\"className\"));\ndriver.findElement(By.tagName(\"h1\"));\ndriver.findElement(By.linkText(\"Click Here\"));\ndriver.findElement(By.partialLinkText(\"Click\"));\ndriver.findElement(By.cssSelector(\"#id .class\"));\ndriver.findElement(By.xpath(\"//tagname[@attribute='value']\"));\n\n// Selenium 4 Relative Locators\nimport static org.openqa.selenium.support.locators.RelativeLocator.with;\nWebElement email = driver.findElement(By.id(\"email\"));\nWebElement password = driver.findElement(with(By.tagName(\"input\")).below(email));\n\n// Web Element Interactions\nWebElement element = driver.findElement(By.id(\"myId\"));\nelement.click();\nelement.sendKeys(\"Text to type\");\nelement.clear();\nString text = element.getText();\nString attribute = element.getAttribute(\"value\");\nboolean isDisp = element.isDisplayed();\nboolean isEnab = element.isEnabled();\nboolean isSel = element.isSelected();\n\n// Dropdowns\nimport org.openqa.selenium.support.ui.Select;\nWebElement dropdownElement = driver.findElement(By.id(\"dropdown\"));\nSelect dropdown = new Select(dropdownElement);\ndropdown.selectByIndex(1);\ndropdown.selectByValue(\"usa\");\ndropdown.selectByVisibleText(\"United States\");\ndropdown.deselectAll();\nboolean isMulti = dropdown.isMultiple();\n\n// Implicit Wait\ndriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));\n\n// Explicit Wait\nimport org.openqa.selenium.support.ui.WebDriverWait;\nimport org.openqa.selenium.support.ui.ExpectedConditions;\nWebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));\nWebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(\"myId\")));\nwait.until(ExpectedConditions.elementToBeClickable(By.id(\"myId\"))).click();\n\n// Fluent Wait\nWait<WebDriver> fluentWait = new FluentWait<>(driver)\n    .withTimeout(Duration.ofSeconds(30))\n    .pollingEvery(Duration.ofSeconds(5))\n    .ignoring(NoSuchElementException.class);\nWebElement element = fluentWait.until(d -> d.findElement(By.id(\"myId\")));\n\n// Alerts\nAlert alert = driver.switchTo().alert();\nString alertText = alert.getText();\nalert.sendKeys(\"Text for prompt\");\nalert.accept();\nalert.dismiss();\n\n// Frames\ndriver.switchTo().frame(0);\ndriver.switchTo().frame(\"frameNameOrId\");\ndriver.switchTo().frame(driver.findElement(By.cssSelector(\"iframe.main\")));\ndriver.switchTo().defaultContent();\ndriver.switchTo().parentFrame();\n\n// Multiple Windows\nString mainWindow = driver.getWindowHandle();\nSet<String> allWindows = driver.getWindowHandles();\nfor (String windowHandle : allWindows) {\n    if (!windowHandle.equals(mainWindow)) {\n        driver.switchTo().window(windowHandle);\n        break;\n    }\n}\ndriver.switchTo().window(mainWindow);\ndriver.switchTo().newWindow(WindowType.TAB);\ndriver.switchTo().newWindow(WindowType.WINDOW);\n\n// Actions Class\nimport org.openqa.selenium.interactions.Actions;\nActions actions = new Actions(driver);\nWebElement element = driver.findElement(By.id(\"menu\"));\nactions.moveToElement(element).perform();\nactions.contextClick(element).perform();\nactions.doubleClick(element).perform();\nWebElement source = driver.findElement(By.id(\"draggable\"));\nWebElement target = driver.findElement(By.id(\"droppable\"));\nactions.dragAndDrop(source, target).perform();\nactions.keyDown(Keys.SHIFT).sendKeys(\"uppercase\").keyUp(Keys.SHIFT).perform();\n\n// JavaScript Executor\nimport org.openqa.selenium.JavascriptExecutor;\nJavascriptExecutor js = (JavascriptExecutor) driver;\nWebElement button = driver.findElement(By.id(\"btn\"));\njs.executeScript(\"arguments[0].click();\", button);\njs.executeScript(\"arguments[0].scrollIntoView(true);\", button);\njs.executeScript(\"window.scrollTo(0, document.body.scrollHeight)\");\njs.executeScript(\"arguments[0].value='Hello';\", driver.findElement(By.id(\"inputBox\")));\n\n// Cookies\nimport org.openqa.selenium.Cookie;\nCookie myCookie = new Cookie(\"Token\", \"123456789\");\ndriver.manage().addCookie(myCookie);\nCookie getCookie = driver.manage().getCookieNamed(\"Token\");\nSet<Cookie> allCookies = driver.manage().getCookies();\ndriver.manage().deleteCookieNamed(\"Token\");\ndriver.manage().deleteAllCookies();\n\n// Screenshots\nimport org.openqa.selenium.TakesScreenshot;\nimport org.openqa.selenium.OutputType;\nimport org.apache.commons.io.FileUtils;\nimport java.io.File;\nTakesScreenshot ts = (TakesScreenshot) driver;\nFile source = ts.getScreenshotAs(OutputType.FILE);\nFile target = new File(\"./screenshots/fullpage.png\");\nFileUtils.copyFile(source, target);\nWebElement logo = driver.findElement(By.id(\"logo\"));\nFile logoSource = logo.getScreenshotAs(OutputType.FILE);\nFileUtils.copyFile(logoSource, new File(\"./screenshots/logo.png\"));\n\n// TestNG Listener\nimport org.testng.ITestListener;\nimport org.testng.ITestResult;\npublic class MyTestListener implements ITestListener {\n    @Override\n    public void onTestFailure(ITestResult result) {\n        System.out.println(\"Test Failed: \" + result.getName());\n    }\n    @Override\n    public void onTestSuccess(ITestResult result) {\n        System.out.println(\"Test Passed: \" + result.getName());\n    }\n}\n\n// WebDriver Listener (Selenium 4)\nimport org.openqa.selenium.support.events.WebDriverListener;\nimport org.openqa.selenium.support.events.EventFiringDecorator;\npublic class MyWebDriverListener implements WebDriverListener {\n    @Override\n    public void beforeClick(WebElement element) {\n        System.out.println(\"Clicking on element: \" + element.getText());\n    }\n}\nWebDriver driver = new ChromeDriver();\nMyWebDriverListener listener = new MyWebDriverListener();\nWebDriver decoratedDriver = new EventFiringDecorator<>(listener).decorate(driver);\n\n// Closing\ndriver.close();\ndriver.quit();\n```\n\n"
-  },
-  {
-    "question": "What is Selenium?",
-    "answer": "Selenium is a widely used open-source tool for Testing Web-Based Applications that checks if they are performing as expected. It is a prominent preference amongst testers for Cross-Browser Testing and is viewed as one of the most reliable systems for Web Application Automation. It is platform-independent, works on all major operating systems, and supports scripts written in various programming languages like Java, Python, and C#."
-  },
-  {
-    "question": "What are the Selenium suite components?",
-    "answer": "There are four major components of the Selenium suite:\n\n1. Selenium IDE: A browser extension that serves as an innovative toolkit for web testing, allowing users to record and playback interactions with web applications.\n\n2. Selenium RC (Remote Control): One of the earliest Selenium tools, preceding WebDriver. It allowed testers to write automated tests in various languages using a server as an intermediary between the code and the browser.\n\n3. Selenium WebDriver: A robust framework providing a programming interface to interact directly with web browsers without an intermediary server, enabling seamless browser automation.\n\n4. Selenium Grid: A server that allows tests to be executed across multiple web browser instances running on remote machines concurrently, using a hub-and-node architecture."
-  },
-  {
-    "question": "Mention the advantages of using Selenium as an automation tool.",
-    "answer": "Selenium is highly preferred because it is an open-source and free framework. It supports multiple programming languages (Java, Python, C#, etc.) and platforms (Windows, macOS, Linux). It offers easy compatibility with various browsers (Chrome, Firefox, Safari) and provides flexible frameworks that enable code reusability and support integrated, parallel test execution."
-  },
-  {
-    "question": "What is test automation or automation testing?",
-    "answer": "Automated Testing means using specialized software tools to execute pre-scripted tests on a software application before it is released into production. It replaces manual human interaction with automated scripts, making it highly valuable in Agile and DevOps methodologies for continuous integration and delivery."
-  },
-  {
-    "question": "What are the advantages of automation testing?",
-    "answer": "Automation testing simplifies test case execution, allowing tests to run unattended. It improves the reliability of tests by ensuring consistent execution. It significantly increases test coverage, allowing for the testing of complex features and detecting more bugs. By minimizing human interaction, it reduces the chance of manual errors. Finally, it saves time and money in the long run by providing faster feedback and enabling the earlier detection of defects."
-  },
-  {
-    "question": "What is Selenese? How is it classified?",
-    "answer": "Selenese refers to the set of commands used in Selenium IDE to perform operations on web elements. They are classified into three categories:\n\n1. Actions: Commands that manipulate the state of the application (e.g., clicking a button, typing text).\n2. Accessors: Commands used to examine the state of the application and store the result in a variable.\n3. Assertions: Commands that verify if the application's state matches the expected state (e.g., verifying text is present)."
-  },
-  {
-    "question": "What is the difference between Selenium 2.0 and Selenium 3.0?",
-    "answer": "Selenium 2.0 merged the original Selenium RC project with the newer WebDriver API, making WebDriver the core of the framework while keeping RC for backward compatibility. Selenium 3.0 completely dropped support for the outdated Selenium RC core, relying entirely on the WebDriver API. It brought major bug fixes, increased stability, and became the W3C standard for browser automation."
-  },
-  {
-    "question": "What are the testing types supported by Selenium?",
-    "answer": "Selenium primarily supports Functional Testing and Regression Testing.\n\nFunctional Testing verifies that each function of the software works according to the requirements, involving inputting data, computing expected outcomes, and comparing actual versus expected results.\n\nRegression Testing ensures that recent code modifications haven't adversely affected existing features. Selenium automates these repetitive suites so they can be run efficiently after every update."
-  },
-  {
-    "question": "What are the different types of annotations used in TestNG with Selenium?",
-    "answer": "Common TestNG annotations include:\n@BeforeSuite / @AfterSuite: Runs before/after all tests in a suite.\n@BeforeTest / @AfterTest: Runs before/after any test method belonging to the classes inside the <test> tag.\n@BeforeClass / @AfterClass: Runs before/after the first method of the current class.\n@BeforeMethod / @AfterMethod: Runs before/after each individual @Test method.\n@BeforeGroups / @AfterGroups: Runs before/after methods belonging to a specific group."
-  },
-  {
-    "question": "What are the types of Web locating strategies?",
-    "answer": "Selenium provides 8 standard locating strategies:\n1. By ID: `driver.find_element(By.ID, \"element_id\")`\n2. By Class Name: `driver.find_element(By.CLASS_NAME, \"class_name\")`\n3. By Name: `driver.find_element(By.NAME, \"element_name\")`\n4. By Tag Name: `driver.find_element(By.TAG_NAME, \"tag_name\")`\n5. By CSS Selector: `driver.find_element(By.CSS_SELECTOR, \"css_selector\")`\n6. By XPath: `driver.find_element(By.XPATH, \"xpath_expression\")`\n7. By Link Text: `driver.find_element(By.LINK_TEXT, \"exact_link_text\")`\n8. By Partial Link Text: `driver.find_element(By.PARTIAL_LINK_TEXT, \"partial_text\")`"
-  },
-  {
-    "question": "What are the types of waits supported by WebDriver?",
-    "answer": "WebDriver supports three types of waits:\n1. Implicit Wait: Tells the WebDriver to poll the DOM for a certain amount of time globally when trying to find any element if it's not immediately available.\n2. Explicit Wait: Pauses the script execution until a specific expected condition is met (e.g., waiting for an element to be clickable).\n3. Fluent Wait: An advanced explicit wait that allows you to specify the maximum time to wait, the polling frequency, and the specific exceptions to ignore while polling."
-  },
-  {
-    "question": "Mention the types of navigation commands.",
-    "answer": "Navigation commands allow WebDriver to move through browser history. They include:\n1. `to(String url)`: Loads a new web page in the current window.\n2. `back()`: Moves back one step in the browser's history.\n3. `forward()`: Moves forward one step in the browser's history.\n4. `refresh()`: Reloads the current web page."
-  },
-  {
-    "question": "What is the Difference Between driver.close() and driver.quit()?",
-    "answer": "The `driver.close()` command is window-specific; it only closes the active window or tab currently in focus. It does not terminate the WebDriver session completely unless it's the only window open. Conversely, `driver.quit()` is session-specific. It closes every single open window and tab associated with that session, safely terminating the WebDriver instance and releasing all memory and background resources."
-  },
-  {
-    "question": "Differentiate Between Manual Testing and Automated Testing.",
-    "answer": "In Manual Testing, test cases are executed step-by-step by a human tester. It requires more time, consumes human resources, and does not require coding frameworks. However, it is the only way to perform exploratory and usability testing. In Automated Testing, test cases are executed by software tools. It is significantly faster, requires programming knowledge to build frameworks (like Data-Driven frameworks), and eliminates human error, but it cannot perform random exploratory testing."
-  },
-  {
-    "question": "What is an Absolute XPath and Relative XPath?",
-    "answer": "Absolute XPath provides the complete path from the root node (`<html>`) all the way down to the desired element, starting with a single forward slash `/`. It is highly brittle and easily breaks if the page structure changes. Relative XPath starts from anywhere in the document using a double forward slash `//`. It locates elements based on attributes rather than exact positioning, making it much more robust and preferred for automation."
-  },
-  {
-    "question": "What are the limitations of Selenium testing?",
-    "answer": "Selenium's limitations include:\n1. No official tech support since it is open-source.\n2. It only supports web applications; testing mobile or desktop apps requires external tools like Appium.\n3. It cannot perform image-based testing or captcha reading natively.\n4. It requires integration with frameworks like TestNG or JUnit for reporting and test management.\n5. It requires programming knowledge to write and maintain the scripts."
-  },
-  {
-    "question": "What is the same-origin policy and how is it handled?",
-    "answer": "The Same-Origin Policy is a browser security feature that prevents a script loaded from one origin from interacting with a resource from another origin (different domain, protocol, or port). Historically, Selenium RC handled this by using an HTTP proxy server that tricked the browser into believing the Selenium Core and the web application belonged to the same origin. Modern Selenium WebDriver circumvents this by communicating directly with the browser natively."
-  },
-  {
-    "question": "What makes Selenium such a widely used testing tool?",
-    "answer": "Selenium is widely used because it is free, open-source, and platform-independent (Windows, Mac, Linux). It supports all major browsers (Chrome, Firefox, Safari, Edge) and allows testers to write scripts in popular programming languages like Java, Python, C#, and JavaScript. It also integrates seamlessly with CI/CD tools like Jenkins and build tools like Maven."
-  },
-  {
-    "question": "Why is it advised to select Selenium for web testing?",
-    "answer": "Selenium is advised because it requires no licensing fees, offers incredible flexibility in language and browser choices, and has a massive community for troubleshooting. It consumes minimal hardware resources, integrates perfectly with TestNG for advanced reporting, and can distribute tests across multiple machines simultaneously using Selenium Grid to save execution time."
-  },
-  {
-    "question": "What is an exception test in Selenium?",
-    "answer": "\n\n```java\n@Test(expectedExceptions = ArithmeticException.class)\npublic void testDivideByZero() {\n    int result = 10 / 0; // Test passes because this throws the expected exception\n}\n```\n\n"
-  },
-  {
-    "question": "How to wait until a web page has been loaded completely in Selenium?",
-    "answer": "To ensure a page is completely loaded, you should use Explicit Waits along with the `ExpectedConditions` class to wait for specific elements to become visible or clickable. Additionally, you can execute a JavaScript script `return document.readyState` and wait until it equals `\"complete\"`."
-  },
-  {
-    "question": "What is Selenium WebDriver?",
-    "answer": "Selenium WebDriver is an open-source framework and API that allows you to execute cross-browser tests. It interacts natively with the browser, just as a real user would, providing a more robust and realistic automation approach than the older JavaScript-injected Selenium RC."
-  },
-  {
-    "question": "Is Selenium WebDriver a library?",
-    "answer": "Yes, Selenium WebDriver is an API and a library of code (provided as JAR files in Java or packages in Python/Node) that you import into your project to send commands to the browser."
-  },
-  {
-    "question": "Which browsers are supported by Selenium Webdriver?",
-    "answer": "Selenium WebDriver supports Google Chrome (via ChromeDriver), Mozilla Firefox (via GeckoDriver), Microsoft Edge (via EdgeDriver), Apple Safari (via SafariDriver), and Opera."
-  },
-  {
-    "question": "Explain Selenium 4 and why it is different from other versions.",
-    "answer": "Selenium 4 is the latest major release that completely adopted the W3C WebDriver standard, dropping the legacy JSON Wire Protocol. This means communication between the code and browser is now direct and native, reducing flakiness. It also introduced Relative Locators (above, below, near), native support for Chrome DevTools Protocol (CDP) for intercepting network requests, and an overhauled Selenium Grid."
-  },
-  {
-    "question": "What will happen if I execute this command: driver.get()?",
-    "answer": "The `driver.get(\"URL\")` command commands the browser to navigate to the specified URL and waits for the page to fully load before returning control back to your test script."
-  },
-  {
-    "question": "What is an alternative to the driver.get() method?",
-    "answer": "An alternative is `driver.navigate().to(\"URL\")`. While it achieves the same result of opening a web page, the `navigate()` interface also allows you to move backward, forward, and refresh the page using the browser's history."
-  },
-  {
-    "question": "Is it possible to test APIs using Selenium Webdriver?",
-    "answer": "No. Selenium WebDriver interacts specifically with the Document Object Model (DOM) of web browsers. It cannot send raw HTTP requests to test REST or SOAP APIs directly. You would need to integrate an API testing library (like REST Assured in Java or Requests in Python) alongside Selenium."
-  },
-  {
-    "question": "Mention different ways of locating an element in Selenium.",
-    "answer": "Elements can be located using eight locator strategies: By.id(), By.name(), By.className(), By.tagName(), By.linkText(), By.partialLinkText(), By.cssSelector(), and By.xpath()."
-  },
-  {
-    "question": "How can we move to the nth-child element using XPath?",
-    "answer": "You can locate the nth-child by grouping your XPath expression and appending an index bracket. For example: `(//div[@class='item'])[3]` selects the third div with the class 'item'."
-  },
-  {
-    "question": "How to type text in an input box using Selenium?",
-    "answer": "\n\n```java\nWebElement inputBox = driver.findElement(By.id(\"username\"));\ninputBox.sendKeys(\"my text input\");\n```\n\n"
-  },
-  {
-    "question": "How to scroll down a page using JavaScript?",
-    "answer": "\n\n```java\nJavascriptExecutor js = (JavascriptExecutor) driver;\n// Scrolls vertically down by 1000 pixels\njs.executeScript(\"window.scrollBy(0, 1000)\");\n```\n\n"
-  },
-  {
-    "question": "How to click on a hyperlink in Selenium?",
-    "answer": "\n\n```java\n// Exact match\ndriver.findElement(By.linkText(\"Contact Us\")).click();\n\n// Partial match\ndriver.findElement(By.partialLinkText(\"About\")).click();\n```\n\n"
-  },
-  {
-    "question": "How to assert the title of a webpage?",
-    "answer": "\n\n```java\nString actualTitle = driver.getTitle();\nString expectedTitle = \"My Website Title\";\nAssert.assertEquals(actualTitle, expectedTitle);\n```\n\n"
-  },
-  {
-    "question": "How to mouse hover over a web element?",
-    "answer": "\n\n```java\nActions action = new Actions(driver);\nWebElement element = driver.findElement(By.id(\"menu\"));\naction.moveToElement(element).perform();\n```\n\n"
-  },
-  {
-    "question": "How to retrieve CSS properties of an element?",
-    "answer": "\n\n```java\nString bgColor = driver.findElement(By.id(\"header\")).getCssValue(\"background-color\");\n```\n\n"
-  },
-  {
-    "question": "What is POM (Page Object Model)?",
-    "answer": "Page Object Model is a design pattern in Selenium where web pages are represented as classes, and the elements on those pages are defined as variables within the class. This separates the testing logic from the element locators, making the code highly reusable, readable, and easy to maintain."
-  },
-  {
-    "question": "Can Captcha be automated?",
-    "answer": "No, Captcha is specifically designed to block automated bots. To test environments with Captcha, teams generally ask developers to temporarily disable the Captcha in lower environments, configure a static mock Captcha, or add an API hook to bypass it during test execution."
-  },
-  {
-    "question": "How does Selenium handle Windows-based pop-ups?",
-    "answer": "Selenium natively only controls web-based pop-ups and alerts. It cannot interact with OS-level dialog boxes (like standard Windows file upload/download prompts). To handle these, you must integrate third-party tools like AutoIt or the Java Robot class."
-  },
-  {
-    "question": "How to take screenshots in WebDriver?",
-    "answer": "\n\n```java\nTakesScreenshot screenshot = (TakesScreenshot) driver;\nFile sourceFile = screenshot.getScreenshotAs(OutputType.FILE);\nFileUtils.copyFile(sourceFile, new File(\"./screenshot.png\"));\n```\n\n"
-  },
-  {
-    "question": "Why do testers choose Selenium over QTP/UFT?",
-    "answer": "Selenium is free and open-source, whereas QTP (now UFT) is a heavily licensed commercial tool. Selenium supports multiple languages (Java, Python, C#) while QTP primarily relies on VBScript. Additionally, Selenium can execute on Mac and Linux, whereas QTP is restricted to Windows."
-  },
-  {
-    "question": "What are Data-Driven and Keyword-Driven frameworks?",
-    "answer": "A Data-Driven framework separates the test script from the test data (stored in Excel, CSV, or DBs), allowing the same test script to run multiple times with different inputs. A Keyword-Driven framework abstracts the code into simple keywords (like 'Click', 'Login') stored in a spreadsheet, allowing non-programmers to write automated test steps."
-  },
-  {
-    "question": "What is the difference between getWindowHandle() and getWindowHandles()?",
-    "answer": "`getWindowHandle()` returns a single alphanumeric string representing the unique identifier of the currently active browser window. `getWindowHandles()` returns a `Set<String>` containing the unique identifiers of all currently open windows or tabs managed by that WebDriver session."
-  },
-  {
-    "question": "What is a Selenium Maven project?",
-    "answer": "A Selenium Maven project utilizes Apache Maven, a build automation tool. Instead of manually downloading and configuring JAR files, you declare dependencies (like Selenium, TestNG) in a `pom.xml` file. Maven automatically downloads these libraries, handles their versions, and standardizes the project compilation process."
-  },
-  {
-    "question": "What is an Object Repository?",
-    "answer": "An Object Repository is a centralized location (often a properties file, XML file, or Page Object class) where all element locators are stored. Instead of hardcoding locators directly inside test methods, tests reference the repository. If an element's ID changes on the website, you only update it once in the repository."
-  },
-  {
-    "question": "How do you Locate Elements using XPath?",
-    "answer": "XPath navigates through the XML/HTML structure. Absolute XPath (e.g., `/html/body/div[1]/form`) traces the exact route from the root. Relative XPath (e.g., `//input[@id='username']`) jumps directly to the matching element regardless of its exact hierarchy position, making it much more reliable."
-  },
-  {
-    "question": "How can you Handle Multiple Windows in Selenium?",
-    "answer": "\n\n```java\nString mainWindow = driver.getWindowHandle();\nSet<String> allWindows = driver.getWindowHandles();\nfor (String windowHandle : allWindows) {\n    if (!windowHandle.equals(mainWindow)) {\n        driver.switchTo().window(windowHandle);\n        break;\n    }\n}\ndriver.switchTo().window(mainWindow);\n```\n\n"
-  }
+   "Selenium Struggles": [
+    {
+      "question": "Selenium Zero to Hero ...!!! quick recap",
+      "answer": "```\n\nSelenium WebDriver (Java) Interview Cheat Sheet.\n\n1. WebDriver Initialization & Options\nModern initialization (Selenium 4+ handles driver executables automatically). Removed imports for brevity.\n\n// Basic Initialization\nWebDriver driver = new ChromeDriver();\n\n// Initialization with Options (Headless, Incognito, etc.)\nChromeOptions options = new ChromeOptions();\noptions.addArguments(\"--headless\"); // Run without UI\noptions.addArguments(\"--incognito\");\noptions.addArguments(\"start-maximized\");\noptions.addArguments(\"--disable-notifications\"); // Block location/mic prompts\n\nWebDriver driver = new ChromeDriver(options);\n\n2. Navigation Commands\nMoving around the browser.\ndriver.get(\"https://www.google.com\"); // Waits till page loads fully\ndriver.navigate().to(\"https://www.google.com\"); // Maintains browser history\ndriver.navigate().back();\ndriver.navigate().forward();\ndriver.navigate().refresh();\n\n3. Locators\nFinding elements on the web page.\n\n// Standard Locators\ndriver.findElement(By.id(\"elementId\"));\ndriver.findElement(By.name(\"elementName\"));\ndriver.findElement(By.className(\"className\"));\ndriver.findElement(By.tagName(\"h1\"));\ndriver.findElement(By.linkText(\"Click Here\"));\ndriver.findElement(By.partialLinkText(\"Click\"));\ndriver.findElement(By.cssSelector(\"#id .class\"));\ndriver.findElement(By.xpath(\"//tagname[@attribute='value']\"));\n\n// Selenium 4 Relative Locators\nWebElement email = driver.findElement(By.id(\"email\"));\nWebElement password = driver.findElement(with(By.tagName(\"input\")).below(email));\n\n4. Web Element Interactions\nActing on found elements.\nWebElement element = driver.findElement(By.id(\"myId\"));\n\nelement.click();\nelement.sendKeys(\"Text to type\");\nelement.clear(); // Clears text from input\nString text = element.getText(); // Gets visible text\nString attribute = element.getAttribute(\"value\"); // Gets attribute value\n\n// Verifications\nboolean isDisp = element.isDisplayed(); // Is it visible?\nboolean isEnab = element.isEnabled();   // Is it active?\nboolean isSel = element.isSelected();   // Is the checkbox/radio checked?\n\n5. Dropdowns (Select Box)\nUsed for <select> tags only.\n\nWebElement dropdownElement = driver.findElement(By.id(\"dropdown\"));\nSelect dropdown = new Select(dropdownElement);\n\ndropdown.selectByIndex(1);\ndropdown.selectByValue(\"usa\");\ndropdown.selectByVisibleText(\"United States\");\n\n// For multi-select dropdowns\ndropdown.deselectAll();\nboolean isMulti = dropdown.isMultiple();\n\n6. Synchronization (Waits)\nCrucial for handling dynamic elements and network delays.\n\n// Implicit Wait: Applied globally for the lifetime of the WebDriver instance.\ndriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));\n\n// Explicit Wait: Applied to a specific element until a condition is met.\nWebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));\nWebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(\"myId\")));\nwait.until(ExpectedConditions.elementToBeClickable(By.id(\"myId\"))).click();\n\n// Fluent Wait: Similar to Explicit but allows polling frequency and ignoring specific exceptions.\nWait<WebDriver> fluentWait = new FluentWait<>(driver)\n    .withTimeout(Duration.ofSeconds(30))\n    .pollingEvery(Duration.ofSeconds(5))\n    .ignoring(NoSuchElementException.class);\n\nWebElement element = fluentWait.until(d -> d.findElement(By.id(\"myId\")));\n\n7. Alerts and Pop-ups (JavaScript)\nAlerts block the underlying UI. You must switch focus to the alert to interact with it before you can continue with the main page.\n\nAlert alert = driver.switchTo().alert();\nString alertText = alert.getText(); // Read the message on the alert\nalert.sendKeys(\"Text for prompt\"); // Type into prompt alert\nalert.accept();  // Click OK to accept the popup\nalert.dismiss(); // Click Cancel to dismiss the popup\n\n8. Frames and Iframes\nSwitching context into embedded documents.\n// Switch to frame\ndriver.switchTo().frame(0); // By Index\ndriver.switchTo().frame(\"frameNameOrId\"); // By Name or ID\ndriver.switchTo().frame(driver.findElement(By.cssSelector(\"iframe.main\"))); // By WebElement\n\n// Switch back to the main document\ndriver.switchTo().defaultContent();\n\n// Switch to parent frame (Nested frames)\ndriver.switchTo().parentFrame();\n\n9. Multiple Windows & Tabs\nHandling multiple browser windows and dynamically switching focus between them to interact with newly opened tabs/windows.\n\nString mainWindow = driver.getWindowHandle(); // Get current window ID\nSet<String> allWindows = driver.getWindowHandles(); // Get all open window IDs\n\nfor (String windowHandle : allWindows) {\n    if (!windowHandle.equals(mainWindow)) {\n        driver.switchTo().window(windowHandle);\n        break; // Switch to the first new window found\n    }\n}\n\n// Switch back to main window\ndriver.switchTo().window(mainWindow);\n\n// Selenium 4: Open new tab or window and automatically switch to it\ndriver.switchTo().newWindow(WindowType.TAB);\ndriver.switchTo().newWindow(WindowType.WINDOW);\n\n10. Actions Class (Mouse & Keyboard)\nUsed for advanced user interactions like hover, drag-and-drop, and right-click.\n\nActions actions = new Actions(driver);\nWebElement element = driver.findElement(By.id(\"menu\"));\n\n// Mouse Hover\nactions.moveToElement(element).perform();\n\n// Right Click (Context Click)\nactions.contextClick(element).perform();\n\n// Double Click\nactions.doubleClick(element).perform();\n\n// Drag and Drop\nWebElement source = driver.findElement(By.id(\"draggable\"));\nWebElement target = driver.findElement(By.id(\"droppable\"));\nactions.dragAndDrop(source, target).perform();\n\n// Keyboard actions (Send SHIFT + text)\nactions.keyDown(Keys.SHIFT).sendKeys(\"uppercase\").keyUp(Keys.SHIFT).perform();\n\n11. JavaScript Executor\nUseful when standard WebDriver clicks/scrolls fail (e.g., element intercepted).\n\nJavascriptExecutor js = (JavascriptExecutor) driver;\n\n// Click an element using JS\nWebElement button = driver.findElement(By.id(\"btn\"));\njs.executeScript(\"arguments[0].click();\", button);\n\n// Scroll into view\njs.executeScript(\"arguments[0].scrollIntoView(true);\", button);\n\n// Scroll to bottom of page\njs.executeScript(\"window.scrollTo(0, document.body.scrollHeight)\");\n\n// Send text using JS\njs.executeScript(\"arguments[0].value='Hello';\", driver.findElement(By.id(\"inputBox\")));\n\n12. Cookies Management\nHandling browser cookies for sessions.\n\n// Add Cookie\nCookie myCookie = new Cookie(\"Token\", \"123456789\");\ndriver.manage().addCookie(myCookie);\n\n// Get Cookie\nCookie getCookie = driver.manage().getCookieNamed(\"Token\");\nSet<Cookie> allCookies = driver.manage().getCookies();\n\n// Delete Cookies\ndriver.manage().deleteCookieNamed(\"Token\");\ndriver.manage().deleteAllCookies();\n\n13. Taking Screenshots\nCapturing evidence of test execution.\n\n// Full Page Screenshot\nTakesScreenshot ts = (TakesScreenshot) driver;\nFile source = ts.getScreenshotAs(OutputType.FILE);\nFile target = new File(\"./screenshots/fullpage.png\");\nFileUtils.copyFile(source, target);\n\n// Selenium 4: Element Specific Screenshot\nWebElement logo = driver.findElement(By.id(\"logo\"));\nFile logoSource = logo.getScreenshotAs(OutputType.FILE);\nFileUtils.copyFile(logoSource, new File(\"./screenshots/logo.png\"));\n\n14. Listeners\nGenerating logs, customizing reports, or capturing screenshots on test failure.\n\n// A. TestNG Listeners (ITestListener)\npublic class MyTestListener implements ITestListener {\n    @Override\n    public void onTestFailure(ITestResult result) {\n        System.out.println(\"Test Failed: \" + result.getName());\n    }\n}\n// Apply in test class: @Listeners(MyTestListener.class)\n\n// B. WebDriver Listeners (Selenium 4 WebDriverListener)\npublic class MyWebDriverListener implements WebDriverListener {\n    @Override\n    public void beforeClick(WebElement element) {\n        System.out.println(\"Clicking on element: \" + element.getText());\n    }\n}\n\nWebDriver driver = new ChromeDriver();\nMyWebDriverListener listener = new MyWebDriverListener();\nWebDriver decoratedDriver = new EventFiringDecorator<>(listener).decorate(driver);\n\n15. Web Tables & Dynamic Values\nHandling HTML tables by iterating through rows (<tr>) and columns (<td>) to find dynamic text.\n\nWebElement table = driver.findElement(By.id(\"myTable\"));\nList<WebElement> rows = table.findElements(By.tagName(\"tr\"));\n\nfor (WebElement row : rows) {\n    List<WebElement> columns = row.findElements(By.tagName(\"td\"));\n    for (WebElement col : columns) {\n        if (col.getText().equals(\"Dynamic Target\")) {\n            System.out.println(\"Found the dynamic value in the table!\");\n            break;\n        }\n    }\n}\n\n16. Handling Stale Elements (StaleElementReferenceException)\nThis exception occurs when the DOM updates (e.g., page refresh or AJAX call), rendering an old element reference invalid. To fix it, you must re-locate the element.\n\ntry {\n    element.click();\n} catch (StaleElementReferenceException e) {\n    // Re-find the element before interacting again to refresh its DOM reference\n    element = driver.findElement(By.id(\"myId\"));\n    element.click();\n}\n\n17. Closing the Browser\nSafely terminating the session.\ndriver.close(); // Closes the current window/tab that WebDriver is focused on\ndriver.quit();  // Closes all windows/tabs and safely terminates the WebDriver session```"
+    },
+    {
+      "question": "Master Your Framework.",
+      "answer": "### Selenium Framework Overview & Architecture Cheat Sheet\n\n#### 1. What is a Test Automation Framework?\nA framework is a structured set of guidelines, coding standards, and project hierarchies that make automation scripts **reliable, reusable, and easy to maintain**. Instead of writing messy code, a framework glues together tools like Selenium, TestNG, and Maven into a unified system.\n\n#### 2. Common Types of Frameworks\n*   **Data-Driven:** Separates test scripts from test data (Excel, CSV, DB).\n*   **Keyword-Driven:** Actions are abstracted into keywords (e.g., \"ClickLogin\") in external files.\n*   **Hybrid:** A combination of Data-Driven and Keyword-Driven approaches.\n*   **BDD (Behavior-Driven Development):** Uses Gherkin syntax (Given, When, Then) via tools like Cucumber.\n\n#### 3. Core Components\n*   **Build Manager:** Maven/Gradle (manages `pom.xml` and dependencies).\n*   **Test Runner:** TestNG/JUnit (handles annotations like `@Test` and assertions).\n*   **Design Pattern:** Page Object Model (POM) (separates elements from scripts).\n*   **Reporting:** ExtentReports/Allure (visual HTML reports).\n*   **CI/CD:** Jenkins/GitHub Actions (automated execution).\n\n---\n\n#### 4. Page Object Model (POM) & Page Factory\n\n```java\n// Page Class (LoginPage.java)\npublic class LoginPage {\n    WebDriver driver;\n    \n    @FindBy(id = \"username\")\n    WebElement txtUsername;\n    \n    @FindBy(id = \"password\")\n    WebElement txtPassword;\n    \n    @FindBy(id = \"loginBtn\")\n    WebElement btnLogin;\n    \n    public LoginPage(WebDriver driver) {\n        this.driver = driver;\n        PageFactory.initElements(driver, this);\n    }\n    \n    public void performLogin(String user, String pass) {\n        txtUsername.sendKeys(user);\n        txtPassword.sendKeys(pass);\n        btnLogin.click();\n    }\n}\n```\n\n#### 5. Typical Maven Directory Structure\n\n```text\nMySeleniumProject/\n├── src/main/java/\n│   ├── pages/         (POM Classes)\n│   ├── base/          (WebDriver initialization)\n│   └── utils/         (ExcelReader, ExtentReportManager)\n├── src/test/java/\n│   └── testcases/     (TestNG Scripts)\n├── src/test/resources/\n│   ├── testdata.xlsx\n│   ├── config.properties\n│   └── testng.xml\n└── pom.xml\n```\n\n#### 6. Base Class (Setup & Teardown)\n\n```java\npublic class BaseClass {\n    public WebDriver driver;\n    \n    @BeforeMethod\n    public void setUp() {\n        driver = new ChromeDriver();\n        driver.manage().window().maximize();\n        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));\n        driver.get(\"[https://myapp.com](https://myapp.com)\");\n    }\n    \n    @AfterMethod\n    public void tearDown() {\n        if (driver != null) driver.quit();\n    }\n}\n```\n\n#### 7. Data-Driven Testing (@DataProvider)\n\n```java\n@DataProvider(name = \"loginData\")\npublic Object[][] getData() {\n    return new Object[][] {\n        {\"adminUser\", \"adminPass123\"},\n        {\"standardUser\", \"standardPass123\"}\n    };\n}\n\n@Test(dataProvider = \"loginData\")\npublic void testLoginWithMultipleUsers(String username, String password) {\n    LoginPage loginPage = new LoginPage(driver);\n    loginPage.performLogin(username, password);\n}\n```"
+    },
+    {
+        "question": "What is Selenium?",
+        "answer": "Selenium is a widely used open-source tool for **Testing Web-Based Applications** that checks if they are performing as expected. It is a prominent preference amongst testers for **Cross-Browser Testing** and is viewed as one of the most reliable systems for Web Application Automation. It is platform-independent, works on all major operating systems, and supports scripts written in various programming languages like Java, Python, and C#."
+    },
+    {
+        "question": "What are the Selenium suite components?",
+        "answer": "There are four major components of the Selenium suite:\n\n1. **Selenium IDE**: A browser extension that serves as an innovative toolkit for web testing, allowing users to record and playback interactions.\n2. **Selenium RC (Remote Control)**: One of the earliest tools, preceding WebDriver. It used a server as an intermediary between the code and the browser.\n3. **Selenium WebDriver**: A robust framework providing a programming interface to interact directly with web browsers without an intermediary server.\n4. **Selenium Grid**: A server that allows tests to be executed across multiple web browser instances running on remote machines concurrently, using a hub-and-node architecture.\n\n"
+    },
+    {
+        "question": "Mention the advantages of using Selenium as an automation tool.",
+        "answer": "Selenium is highly preferred because it is an **open-source and free** framework. It supports multiple programming languages (Java, Python, C#, etc.) and platforms (Windows, macOS, Linux). It offers easy compatibility with various browsers (Chrome, Firefox, Safari) and provides flexible frameworks that enable code reusability and support integrated, parallel test execution."
+    },
+    {
+        "question": "What is test automation or automation testing?",
+        "answer": "Automated Testing means using specialized software tools to execute pre-scripted tests on a software application before it is released into production. It replaces manual human interaction with automated scripts, making it highly valuable in **Agile and DevOps** methodologies for continuous integration and delivery."
+    },
+    {
+        "question": "What are the different types of annotations used in TestNG with Selenium?",
+        "answer": "Common TestNG annotations include:\n*   `@BeforeSuite` / `@AfterSuite`: Runs before/after all tests in a suite.\n*   `@BeforeTest` / `@AfterTest`: Runs before/after any test method inside the `<test>` tag.\n*   `@BeforeClass` / `@AfterClass`: Runs before/after the first method of the current class.\n*   `@BeforeMethod` / `@AfterMethod`: Runs before/after each individual `@Test` method.\n*   `@BeforeGroups` / `@AfterGroups`: Runs before/after methods belonging to a specific group."
+    },
+    {
+        "question": "What are the types of Web locating strategies?",
+        "answer": "Selenium provides 8 standard locating strategies:\n\n1. **By ID**: `driver.findElement(By.id(\"element_id\"));` \n2. **By Class Name**: `driver.findElement(By.className(\"class_name\"));` \n3. **By Name**: `driver.findElement(By.name(\"element_name\"));` \n4. **By Tag Name**: `driver.findElement(By.tagName(\"tag_name\"));` \n5. **By CSS Selector**: `driver.findElement(By.cssSelector(\"css_selector\"));` \n6. **By XPath**: `driver.findElement(By.xpath(\"xpath_expression\"));` \n7. **By Link Text**: `driver.findElement(By.linkText(\"exact_link_text\"));` \n8. **By Partial Link Text**: `driver.findElement(By.partialLinkText(\"partial_text\"));`"
+    },
+    {
+        "question": "What are the types of waits supported by WebDriver?",
+        "answer": "WebDriver supports three types of waits:\n1. **Implicit Wait**: Tells the WebDriver to poll the DOM for a certain amount of time globally when trying to find any element.\n2. **Explicit Wait**: Pauses script execution until a specific **ExpectedCondition** is met (e.g., element is clickable).\n3. **Fluent Wait**: An advanced explicit wait that allows you to specify the maximum wait time, the polling frequency, and specific exceptions to ignore."
+    },
+    {
+        "question": "Mention the types of navigation commands.",
+        "answer": "Navigation commands allow WebDriver to move through browser history. They include:\n1. `navigate().to(String url)`: Loads a new web page.\n2. `navigate().back()`: Moves back one step.\n3. `navigate().forward()`: Moves forward one step.\n4. `navigate().refresh()`: Reloads the current page."
+    },
+    {
+        "question": "What is the Difference Between driver.close() and driver.quit()?",
+        "answer": "The `driver.close()` command is **window-specific**; it only closes the active window or tab currently in focus. Conversely, `driver.quit()` is **session-specific**. It closes every single open window and tab associated with that session, safely terminating the WebDriver instance and releasing all memory resources."
+    },
+    {
+        "question": "What is an Absolute XPath and Relative XPath?",
+        "answer": " **Absolute XPath** provides the complete path from the root node (`<html>`), starting with a single forward slash `/`. It is highly brittle. **Relative XPath** starts from anywhere in the document using a double forward slash `//`. It locates elements based on attributes, making it much more robust and preferred.\n\n"
+    },
+    {
+        "question": "What are the limitations of Selenium testing?",
+        "answer": "Selenium's limitations include:\n1. No official tech support (open-source).\n2. Only supports web applications (not mobile or desktop natively).\n3. Cannot perform image-based testing or captcha reading natively.\n4. Requires programming knowledge to write and maintain scripts."
+    },
+    {
+        "question": "What is the same-origin policy and how is it handled?",
+        "answer": "The **Same-Origin Policy** is a browser security feature preventing scripts from one origin interacting with resources from another. Selenium RC handled this via an HTTP proxy server. Modern Selenium WebDriver circumvents this by communicating directly with the browser natively."
+    },
+    {
+        "question": "What is an exception test in Selenium?",
+        "answer": "An exception test verifies that your code throws the correct error. In TestNG, you use the `expectedExceptions` parameter.\n\n```java\n@Test(expectedExceptions = ArithmeticException.class)\npublic void testDivideByZero() {\n    int result = 10 / 0; // Test passes because this throws the expected exception\n}\n```"
+    },
+    {
+        "question": "How to wait until a web page has been loaded completely in Selenium?",
+        "answer": "You should use **Explicit Waits** with `ExpectedConditions` to wait for specific elements. Additionally, you can execute a JavaScript script:\n\n```java\nJavascriptExecutor js = (JavascriptExecutor) driver;\njs.executeScript(\"return document.readyState\").equals(\"complete\");\n```"
+    },
+    {
+        "question": "Explain Selenium 4 and why it is different from other versions.",
+        "answer": "Selenium 4 completely adopted the **W3C WebDriver standard**, dropping the legacy JSON Wire Protocol. It introduced **Relative Locators** (above, below, near), native support for Chrome DevTools Protocol (CDP), and an overhauled Selenium Grid architecture."
+    },
+    {
+        "question": "Is it possible to test APIs using Selenium Webdriver?",
+        "answer": "No. Selenium WebDriver interacts specifically with the **DOM** of web browsers. It cannot send raw HTTP requests. You would need to integrate an API testing library like **REST Assured** (Java) or **Requests** (Python)."
+    },
+    {
+        "question": "How can we move to the nth-child element using XPath?",
+        "answer": "You can locate the nth-child by grouping your XPath expression and appending an index bracket. \n\nExample: `(//div[@class='item'])[3]` selects the third div with that class."
+    },
+    {
+        "question": "How to type text in an input box using Selenium?",
+        "answer": "To type text into an input box, you locate the web element and use the `sendKeys()` method. \n\n```java\nWebElement inputBox = driver.findElement(By.id(\"username\"));\ninputBox.sendKeys(\"my text input\");\n```"
+    },
+    {
+        "question": "How to scroll down a page using JavaScript?",
+        "answer": "Since Selenium doesn't have a direct scroll command, you cast the driver to a `JavascriptExecutor`.\n\n```java\nJavascriptExecutor js = (JavascriptExecutor) driver;\n// Scrolls vertically down by 1000 pixels\njs.executeScript(\"window.scrollBy(0, 1000)\");\n```"
+    },
+    {
+        "question": "How to click on a hyperlink in Selenium?",
+        "answer": "You can locate and click a hyperlink using `linkText` or `partialLinkText`.\n\n```java\n// Exact match\ndriver.findElement(By.linkText(\"Contact Us\")).click();\n\n// Partial match\ndriver.findElement(By.partialLinkText(\"About\")).click();\n```"
+    },
+    {
+        "question": "How to assert the title of a webpage?",
+        "answer": "You retrieve the title using `driver.getTitle()` and compare it against your expected string.\n\n```java\nString actualTitle = driver.getTitle();\nString expectedTitle = \"My Website Title\";\nAssert.assertEquals(actualTitle, expectedTitle);\n```"
+    },
+    {
+        "question": "How to mouse hover over a web element?",
+        "answer": "Hovering is an advanced interaction handled by the `Actions` class.\n\n```java\nActions action = new Actions(driver);\nWebElement element = driver.findElement(By.id(\"menu\"));\naction.moveToElement(element).perform();\n```"
+    },
+    {
+        "question": "How to retrieve CSS properties of an element?",
+        "answer": "You use the `getCssValue()` method on a WebElement, passing the exact CSS property name.\n\n```java\nString bgColor = driver.findElement(By.id(\"header\")).getCssValue(\"background-color\");\n```"
+    },
+    {
+        "question": "What is POM (Page Object Model)?",
+        "answer": "POM is a design pattern where web pages are represented as classes, and elements are defined as variables. This separates testing logic from locators, enhancing reusability and maintainability.\n\n"
+    },
+    {
+        "question": "Can Captcha be automated?",
+        "answer": "No, Captcha is designed to block bots. To test environments with Captcha, teams typically disable it in lower environments, use a static mock Captcha, or use an API hook to bypass it."
+    },
+    {
+        "question": "How does Selenium handle Windows-based pop-ups?",
+        "answer": "Selenium natively only controls web-based pop-ups. It cannot interact with OS-level dialog boxes. To handle these, you must integrate third-party tools like **AutoIt** or the Java **Robot class**."
+    },
+    {
+        "question": "How to take screenshots in WebDriver?",
+        "answer": "You cast the driver to `TakesScreenshot` and call `getScreenshotAs()`.\n\n```java\nTakesScreenshot screenshot = (TakesScreenshot) driver;\nFile sourceFile = screenshot.getScreenshotAs(OutputType.FILE);\nFileUtils.copyFile(sourceFile, new File(\"./screenshot.png\"));\n```"
+    },
+    {
+        "question": "What are Data-Driven and Keyword-Driven frameworks?",
+        "answer": "**Data-Driven framework** separates the test script from test data (Excel/DB), running the same script with different inputs. **Keyword-Driven framework** abstracts code into keywords (like 'Click', 'Login') stored in a spreadsheet."
+    },
+    {
+        "question": "What is the difference between getWindowHandle() and getWindowHandles()?",
+        "answer": "`getWindowHandle()` returns a single alphanumeric string for the **currently active** window. `getWindowHandles()` returns a `Set<String>` containing the IDs of **all** currently open windows managed by the session."
+    },
+    {
+        "question": "What is a Selenium Maven project?",
+        "answer": "A project utilizing Apache Maven to manage dependencies. Instead of manual JAR configuration, you declare dependencies (Selenium, TestNG) in a `pom.xml` file, and Maven handles the rest."
+    },
+    {
+        "question": "What is an Object Repository?",
+        "answer": "An Object Repository is a centralized location (properties file, XML, or Page Object class) where element locators are stored. Tests reference the repository rather than hardcoding locators, ensuring easier updates if the UI changes."
+    }
 ]}
 

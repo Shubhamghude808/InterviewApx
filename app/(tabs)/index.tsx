@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { StyleSheet, Text, TouchableOpacity, ScrollView } from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
@@ -28,7 +28,7 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Text style={styles.title}>Topics</Text>
+        <Text style={styles.title}>Level Up Zone</Text>
 
         {topics.map((topic) => (
           <TouchableOpacity
