@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native";
 
@@ -7,21 +7,22 @@ export default function HomeScreen() {
   const router = useRouter();
 
   const topics = 
-    ["Programs Coding Round Code Panic: The I Know This… Why Can’t I Solve It? Survival Guide",
-    "AI Knows Everything  Will I Be Replaced… or Just Reviewing Its Mistakes?",
+    ["Coding Chaos",
+    "AI Anxiety",
     "Playwright Panic",
      "TypeScript Trouble",
      "Selenium Struggles",
      "Java Jitters",
-     "BDD Cucumber TestNG - its Buisness",
-     "Git Happens: The 'Oh No, What Did I Just Delete?' Survival Guide",
-     "roadmaps",
+     "Cucumber Confusion",
+     "Git Glitches",
+     "Roadmap Ruckus",
     ];
- 
+
+
 
   // ✅ Clean handler
   const handlePress = (topic: string) => {
-    if (topic.toLowerCase() === "roadmaps") {
+    if (topic.toLowerCase() === "roadmap ruckus") {
       router.push("/roadmaps" as const);
     } else {
       router.push(`/topic?name=${topic}` as const);
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 26,
+    fontSize: 32,
     fontWeight: "bold",
     marginBottom: 20,
     color: "#1A1A1A",
@@ -80,7 +81,8 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    textAlign: "center",
+    textAlign: "left",
+    paddingHorizontal: 30,
     fontSize: 16,
     color: "#333",
     fontWeight: "600",
