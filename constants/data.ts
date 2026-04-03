@@ -416,14 +416,14 @@ export const data =
   }
 ],
 
-  "Git Happens: The 'Oh No, What Did I Just Delete?' Survival Guide": [
+  "Git Glitches": [
    {
     question: "Git quick recap of essential Git commands",
     answer: " \n1. Setup & Configuration\nSet your username and email (attached to your commits):\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"you@example.com\"\nCheck configuration: git config --list\n\n2. Starting a Project\nInitialize a new local repository: git init\nClone an existing remote repository: git clone <url>\n\n3. Basic Workflow (Staging & Committing)\nCheck the state of your working directory: git status\nAdd a specific file to staging area: git add <file>\nAdd all changed files to staging area: git add .\nCommit staged changes with a message: git commit -m \"Commit message\"\nModify the last commit (or add missed files): git commit --amend -m \"New message\"\n\n4. Branching\nList all local branches: git branch\nList all local and remote branches: git branch -a\nCreate a new branch: git branch <branch-name>\nSwitch to a branch (Older way): git checkout <branch-name>\nSwitch to a branch (Newer way): git switch <branch-name>\nCreate and switch to a new branch instantly: git checkout -b <branch-name> OR git switch -c <branch-name>\nDelete a branch: git branch -d <branch-name>\n\n5. Merging & Rebasing\nMerge <branch-name> into your current branch: git merge <branch-name>\nRebase your current branch onto <branch-name>: git rebase <branch-name>\nAbort a conflicting merge/rebase: git merge --abort OR git rebase --abort\n\n6. Remote Repositories (Syncing)\nList remote connections: git remote -v\nAdd a remote connection: git remote add origin <url>\nFetch changes from remote (doesn't merge): git fetch origin\nFetch and merge changes from remote: git pull origin <branch-name>\nPush local commits to remote: git push origin <branch-name>\nForce push (use with caution!): git push -f origin <branch-name>\n\n7. Undoing Changes\nDiscard unstaged changes in a file: git checkout -- <file> OR git restore <file>\nUnstage a file (keep changes): git reset HEAD <file> OR git restore --staged <file>\nUndo a commit by creating a new reversing commit (Safe): git revert <commit-hash>\nReset to a previous commit, keeping changes unstaged: git reset <commit-hash>\nReset to a previous commit, wiping all changes (Hard): git reset --hard <commit-hash>\n\n8. Stashing (Temporary Storage)\nTemporarily save modified, tracked files: git stash\nSave with a specific message: git stash push -m \"message\"\nList all stashes: git stash list\nApply the most recent stash and remove it from stash list: git stash pop\nApply the most recent stash (keep in stash list): git stash apply\nClear all stashes: git stash clear\n\n9. History & Inspecting\nView commit history: git log\nView history in a single line: git log --oneline\nShow changes made in a specific commit: git show <commit-hash>\nShow working directory differences not yet staged: git diff\nShow differences between staging and last commit: git diff --staged"
 }
   ],
 
-  "BDD Cucumber TestNG - its Buisness": 
+  "Cucumber Confusion": 
   [
   {
     question: "Translating Business English into Computer Confusion",
@@ -437,7 +437,7 @@ export const data =
 
   ],
 
-  "AI Knows Everything  Will I Be Replaced… or Just Reviewing Its Mistakes?" : [
+  "AI Anxiety" : [
     {
       "question": "What is Artificial Intelligence (AI)?",
       "answer": "Artificial Intelligence is the simulation of human cognitive processes by machines, especially computer systems. It encompasses learning, reasoning, problem-solving, perception, and language understanding, allowing software to perform tasks that typically require human intelligence."
@@ -649,7 +649,7 @@ export const data =
   ],
 
  
-  "Programs Coding Round Code Panic: The I Know This… Why Can’t I Solve It? Survival Guide": [
+  "Coding Chaos": [
     {
       "question": "Write a program to find the Maximum of 3 Numbers",
       "answer": "class MaxOfThree {\n  static findMax(a: number, b: number, c: number): number {\n    let max = a;\n    if (b > max) {\n      max = b;\n    }\n    if (c > max) {\n      max = c;\n    }\n    return max;\n  }\n}\nconsole.log('Maximum is: ' + MaxOfThree.findMax(10, 25, 15));"
@@ -1193,3 +1193,4 @@ export const data =
       "answer": "When clicking a link opens a new tab, you must explicitly switch the driver's focus to the new window using its unique ID.\n http://googleusercontent.com/immersive_entry_chip/0 \nhttp://googleusercontent.com/immersive_entry_chip/1"
 }
   ]}
+

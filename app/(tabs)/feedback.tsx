@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { Linking } from "react-native";
+
 import {
-  View,
+  Alert,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
-  Alert,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -39,37 +41,72 @@ export default function FeedbackScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Feedback</Text>
+   <SafeAreaView style={styles.container}>
+  <View style={styles.content}>
+    <Text style={styles.title}>Share Your Thoughts</Text>
 
-      <TextInput
-        placeholder="Your Email"
-        value={email}
-        onChangeText={setEmail}
-        style={styles.input}
-      />
+    <TextInput
+      placeholder="Your Email"
+      value={email}
+      onChangeText={setEmail}
+      style={styles.input}
+    />
 
-      <TextInput
-        placeholder="Your Message"
-        value={message}
-        onChangeText={setMessage}
-        textAlignVertical="top" 
-        style={[styles.input, { height: 120 }]}
-        multiline
-      />
+    <TextInput
+      placeholder="Your Message"
+      value={message}
+      onChangeText={setMessage}
+      textAlignVertical="top"
+      style={[styles.input, { height: 120 }]}
+      multiline
+    />
 
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Submit</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+    <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+      <Text style={styles.buttonText}>Submit</Text>
+    </TouchableOpacity>
+  </View>
+
+  {/* 👇 This will stick to bottom */}
+  <View style={styles.contactContainer}>
+    <Text style={styles.contactTitle}>Contact Us</Text>
+
+    <View style={styles.devCard}>
+      <Text style={styles.devName}>Shubham Ghude</Text>
+    
+    <TouchableOpacity
+  onPress={() => Linking.openURL("https://www.linkedin.com/in/shubham-ghude")}
+>
+  <Text style={styles.devLink}>Linkedin</Text>
+</TouchableOpacity>
+      
+    </View>
+
+    <View style={styles.devCard}>
+      <Text style={styles.devName}>Sujay Navghare</Text>
+      
+    <TouchableOpacity
+  onPress={() => Linking.openURL("https://www.linkedin.com/in/sujaynavghare")}
+>
+  <Text style={styles.devLink}>Linkedin</Text>
+</TouchableOpacity>
+
+
+    </View>
+  </View>
+</SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: "#F5F7FB", // ✅ soft background
+  flex: 1,
+  padding: 20,
+  backgroundColor: "#F5F7FB",
+  justifyContent: "space-between", // 🔥 key line
+  },
+  content :
+  {
+
   },
 
   title: {
@@ -108,5 +145,40 @@ const styles = StyleSheet.create({
   marginBottom: 15,
   height: 120,
   textAlignVertical: "top", // 👈 also safe to add here
+},
+
+contactContainer: {
+  marginTop: 40,
+  paddingTop: 20,
+  borderTopWidth: 1,
+  borderTopColor: "#DDE3EC",
+},
+
+contactTitle: {
+  fontSize: 18,
+  fontWeight: "bold",
+  marginBottom: 10,
+  color: "#1A1A1A",
+},
+
+devCard: {
+  backgroundColor: "#fff",
+  padding: 12,
+  borderRadius: 10,
+  marginBottom: 10,
+  borderWidth: 1,
+  borderColor: "#E6ECF5",
+},
+
+devName: {
+  fontSize: 14,
+  fontWeight: "600",
+  color: "#333",
+},
+
+devLink: {
+  fontSize: 13,
+  color: "#4A90E2",
+  marginTop: 4,
 },
 });
