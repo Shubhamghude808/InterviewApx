@@ -15,6 +15,10 @@ export default function FeedbackScreen() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
+  const handleEmailPress = () => 
+  {
+  Linking.openURL("mailto:nsg.ailabs@gmail.com");
+  };
   const handleSubmit = async () => {
     try {
       const res = await fetch("https://formspree.io/f/mdapkpew", {
@@ -68,6 +72,7 @@ export default function FeedbackScreen() {
 
   {/* 👇 This will stick to bottom */}
   <View style={styles.contactContainer}>
+    
     <Text style={styles.contactTitle}>Contact Us</Text>
 
     <View style={styles.devCard}>
@@ -89,8 +94,12 @@ export default function FeedbackScreen() {
 >
   <Text style={styles.devLink}>Linkedin</Text>
 </TouchableOpacity>
-
-
+   </View>
+   <View style={styles.devCard}>
+      <Text style={styles.devName}>Reach Out</Text>
+      <TouchableOpacity onPress={handleEmailPress}>
+        <Text style={styles.devLink}>nsg.ailabs@gmail.com</Text>
+      </TouchableOpacity>
     </View>
   </View>
 </SafeAreaView>
@@ -108,6 +117,14 @@ const styles = StyleSheet.create({
   {
 
   },
+
+contactContainer: {
+  marginTop: 'auto', // This pushes it to the bottom as much as possible
+  paddingTop: 20,
+  paddingBottom: 20, // Adds space so it's not masked by the navigation bar
+  borderTopWidth: 1,
+  borderTopColor: "#DDE3EC",
+},
 
   title: {
     fontSize: 26,
