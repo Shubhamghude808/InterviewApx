@@ -1,12 +1,24 @@
-import { View, Text, ScrollView, StyleSheet, Alert } from "react-native";
-import { useLocalSearchParams } from "expo-router";
-import { data } from "../constants/data";
-import { SafeAreaView } from "react-native-safe-area-context";
 import * as Clipboard from "expo-clipboard";
+import { useLocalSearchParams } from "expo-router";
+import {
+  Alert,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  useColorScheme,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { data } from "../constants/data";
+import { Colors } from "../constants/theme";
 
 export default function TopicScreen() {
   const { name } = useLocalSearchParams();
   const questions = data[name as keyof typeof data] || [];
+
+  // ✅ THEME SETUP
+  const scheme = useColorScheme();
+  const theme = Colors[scheme ?? "light"];
 
   // 📋 Copy function
   const copyCode = (code: string) => {
@@ -38,73 +50,70 @@ export default function TopicScreen() {
 
     return result;
   };
-const colors = [
-  "#569CD6", // blue
-  "#CE9178", // orange
-  "#4EC9B0", // teal
-  "#DCDCAA", // yellow
-  "#C586C0", // purple
-  "#9CDCFE", // light blue
-];
 
-const getColorForKeyword = (word: string) => {
-  let hash = 0;
-
-  for (let i = 0; i < word.length; i++) {
-    hash = word.charCodeAt(i) + ((hash << 5) - hash);
-  }
-
-  return colors[Math.abs(hash) % colors.length];
-};
-  // 🎨 Simple Syntax Highlighter
-  const highlightCode = (code: string) => {
-    const keywords = [
-       // Original JS/TS/Playwright
-    "const", "let", "var", "return", "class", "static", "if", "else", 
-    "for", "while", "import", "from", "function", "true", "false","Switch", "case", "break", "default","String", "Set",
-
-    // Added for Playwright & Modern JS/TS
-    "async", "await", "export", "interface", "type", "enum", "null",
-
-    // Added for Java
-    "public", "private", "protected", "final", "void", "new", "this", "extends", "implements",
-
-    // Added for Python
-    "def", "elif", "try", "except", "lambda", "None", "in", "is", "and", "or", "not",
-
-    // Added for SQL
-    "SELECT", "FROM", "WHERE", "INSERT", "UPDATE", "DELETE", "JOIN", "CREATE", "DROP", "ALTER"
+  const colors = [
+    "#569CD6",
+    "#CE9178",
+    "#4EC9B0",
+    "#DCDCAA",
+    "#C586C0",
+    "#9CDCFE",
   ];
 
+  const getColorForKeyword = (word: string) => {
+    let hash = 0;
+    for (let i = 0; i < word.length; i++) {
+      hash = word.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return colors[Math.abs(hash) % colors.length];
+  };
+
+  // 🎨 Syntax Highlighter
+  const highlightCode = (code: string) => {
+    const keywords = [
+      "const", "let", "var", "return", "class", "static", "if", "else",
+      "for", "while", "import", "from", "function", "true", "false",
+      "Switch", "case", "break", "default", "String", "Set",
+      "async", "await", "export", "interface", "type", "enum", "null",
+      "public", "private", "protected", "final", "void", "new", "this",
+      "extends", "implements",
+      "def", "elif", "try", "except", "lambda", "None", "in", "is",
+      "and", "or", "not",
+      "SELECT", "FROM", "WHERE", "INSERT", "UPDATE", "DELETE", "JOIN",
+      "CREATE", "DROP", "ALTER"
+    ];
 
     return code.split("\n").map((line, lineIndex) => (
-    <Text key={lineIndex} style={{ flexWrap: "wrap" }}>
-      {line.split(" ").map((word, wordIndex) => {
-        let color = "#D4D4D4"; // default
+      <Text key={lineIndex} style={{ flexWrap: "wrap" }}>
+        {line.split(" ").map((word, wordIndex) => {
+          let color = "#D4D4D4";
 
-        if (keywords.includes(word)) {
-          color = getColorForKeyword(word); // 🎨 random per keyword
-        } else if (word.startsWith("//")) {
-          color = "#6A9955"; // 🟢 comments
-        } else if (word.includes("'") || word.includes('"')) {
-          color = "#CE9178"; // 🟠 strings
-        }
+          if (keywords.includes(word)) {
+            color = getColorForKeyword(word);
+          } else if (word.startsWith("//")) {
+            color = "#6A9955";
+          } else if (word.includes("'") || word.includes('"')) {
+            color = "#CE9178";
+          }
 
-        return (
-          <Text key={wordIndex} style={{ color }}>
-            {word + " "}
-          </Text>
-        );
-      })}
-      {"\n"}
-    </Text>
-  ));
+          return (
+            <Text key={wordIndex} style={{ color }}>
+              {word + " "}
+            </Text>
+          );
+        })}
+        {"\n"}
+      </Text>
+    ));
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: theme.background }]}
+    >
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Text style={styles.title}>
+        
+        <Text style={[styles.title, { color: theme.text }]}>
           {name?.toString().toUpperCase()}
         </Text>
 
@@ -115,7 +124,7 @@ const getColorForKeyword = (word: string) => {
             <View key={index} style={styles.card}>
 
               {/* Question */}
-              <Text style={styles.question}>
+              <Text style={[styles.question, { color: theme.text }]}>
                 Q{index + 1}. {item.question}
               </Text>
 
@@ -123,8 +132,7 @@ const getColorForKeyword = (word: string) => {
               {parsed.map((block, i) =>
                 block.type === "code" ? (
                   <View key={i} style={styles.codeBox}>
-
-                    {/* Header */}
+                    
                     <View style={styles.codeHeader}>
                       <Text style={styles.codeLabel}>Code</Text>
 
@@ -136,21 +144,29 @@ const getColorForKeyword = (word: string) => {
                       </Text>
                     </View>
 
-                    {/* Highlighted Code */}
                     <Text style={styles.codeText}>
                       {highlightCode(block.content)}
                     </Text>
 
                   </View>
                 ) : (
-                  <View key={i} style={styles.textBox}>
-                    <Text style={styles.answerText}>
+                  <View
+                    key={i}
+                    style={[
+                      styles.textBox,
+                      {
+                        backgroundColor:
+                          scheme === "dark" ? "#1E2228" : theme.card,
+                        borderColor: theme.border,
+                      },
+                    ]}
+                  >
+                    <Text style={[styles.answerText, { color: theme.text }]}>
                       {block.content}
                     </Text>
                   </View>
                 )
               )}
-
             </View>
           );
         })}
@@ -163,15 +179,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#F5F7FB",
   },
 
   title: {
     fontSize: 26,
     fontWeight: "bold",
     marginBottom: 20,
-    color: "#1A1A1A",
-    textAlign: "center",
   },
 
   card: {
@@ -182,30 +195,24 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     marginBottom: 8,
-    color: "#333",
   },
 
-  // 📝 Text block
   textBox: {
-    backgroundColor: "#FFFFFF",
     borderWidth: 1,
-    borderColor: "#DDE3EC",
     padding: 14,
     borderRadius: 12,
     marginTop: 8,
   },
 
   answerText: {
-    color: "#444",
     fontSize: 14,
     lineHeight: 20,
   },
 
-  // 💻 Code block
   codeBox: {
     backgroundColor: "#1E1E1E",
     padding: 14,
-    borderRadius: 12,
+    borderRadius: 15,
     marginTop: 8,
   },
 

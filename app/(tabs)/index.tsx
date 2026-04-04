@@ -1,9 +1,14 @@
 import { useRouter } from "expo-router";
-import { StyleSheet, Text, TouchableOpacity, ScrollView } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, ScrollView, useColorScheme } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Colors } from "../../constants/theme";
 
 export default function HomeScreen() {
   const router = useRouter();
+
+  // ✅ FIX: hook inside component
+  const scheme = useColorScheme();
+  const theme = Colors[scheme ?? "light"];
 
   const topics = [
     "Coding Chaos",
@@ -26,22 +31,32 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Text style={styles.title}>Topics</Text>
+        
+        <Text style={[styles.title, { color: theme.text }]}>
+          Topics
+        </Text>
 
         {topics.map((topic) => (
           <TouchableOpacity
             key={topic}
-            style={styles.button}
+            style={[
+              styles.button,
+              {
+                backgroundColor: theme.card,
+                borderColor: theme.border,
+              },
+            ]}
             activeOpacity={0.8}
             onPress={() => handlePress(topic)}
           >
-            <Text style={styles.buttonText}>
+            <Text style={[styles.buttonText, { color: theme.text }]}>
               {topic.toUpperCase()}
             </Text>
           </TouchableOpacity>
         ))}
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -51,20 +66,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#F5F7FB",
   },
 
   title: {
     fontSize: 32,
     fontWeight: "bold",
     marginBottom: 20,
-    color: "#1A1A1A",
   },
 
   button: {
-    backgroundColor: "#FFFFFF",
     borderWidth: 1,
-    borderColor: "#DDE3EC",
     paddingVertical: 16,
     borderRadius: 14,
     marginBottom: 14,
@@ -79,7 +90,6 @@ const styles = StyleSheet.create({
     textAlign: "left",
     paddingHorizontal: 30,
     fontSize: 16,
-    color: "#333",
     fontWeight: "600",
   },
 });
