@@ -182,7 +182,9 @@ export default function FeedbackScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    // padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 20,
   },
 
   topContent: {
@@ -214,7 +216,7 @@ const styles = StyleSheet.create({
   },
 
   contactContainer: {
-    paddingTop: 20,
+    paddingTop: 15,
     borderTopWidth: 1,
   },
 
