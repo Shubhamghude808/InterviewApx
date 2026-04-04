@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Linking, useColorScheme } from "react-native";
-
 import {
   Alert,
   StyleSheet,
@@ -16,7 +15,6 @@ export default function FeedbackScreen() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
-  // ✅ theme setup
   const scheme = useColorScheme();
   const theme = Colors[scheme ?? "light"];
 
@@ -27,10 +25,7 @@ export default function FeedbackScreen() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email,
-          message,
-        }),
+        body: JSON.stringify({ email, message }),
       });
 
       if (res.ok) {
@@ -38,17 +33,20 @@ export default function FeedbackScreen() {
         setEmail("");
         setMessage("");
       } else {
-        Alert.alert("Try again", "Something went wrong! Please check your email id");
+        Alert.alert("Try again", "Something went wrong!");
       }
-    } catch (error) {
+    } catch {
       Alert.alert("Error", "Network error");
     }
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
-      
-      <View>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: theme.background }]}
+      edges={["top"]} // ✅ removes bottom gap
+    >
+      {/* 🔥 TOP CONTENT */}
+      <View style={styles.topContent}>
         <Text style={[styles.title, { color: theme.text }]}>
           Share Your Thoughts
         </Text>
@@ -73,8 +71,8 @@ export default function FeedbackScreen() {
           placeholderTextColor={theme.icon}
           value={message}
           onChangeText={setMessage}
-          textAlignVertical="top"
           multiline
+          textAlignVertical="top"
           style={[
             styles.input,
             {
@@ -87,25 +85,24 @@ export default function FeedbackScreen() {
         />
 
         <TouchableOpacity
-  style={[
-    styles.button,
-    {
-      backgroundColor: scheme === "dark" ? "#2563EB" : "#4A90E2",
-    },
-  ]}
-  onPress={handleSubmit}
->
-  <Text style={styles.buttonText}>Submit</Text>
-</TouchableOpacity>
+          style={[
+            styles.button,
+            {
+              backgroundColor:
+                scheme === "dark" ? "#2563EB" : "#4A90E2",
+            },
+          ]}
+          onPress={handleSubmit}
+        >
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
       </View>
 
-      {/* Bottom Section */}
+      {/* 🔥 BOTTOM CONTACT */}
       <View
         style={[
           styles.contactContainer,
-          { borderTopColor: theme.border 
-            
-          },
+          { borderTopColor: theme.border },
         ]}
       >
         <Text style={[styles.contactTitle, { color: theme.text }]}>
@@ -126,13 +123,23 @@ export default function FeedbackScreen() {
             Shubham Ghude
           </Text>
 
-          <TouchableOpacity
-            onPress={() =>
-              Linking.openURL("https://www.linkedin.com/in/shubham-ghude")
-            }
-          >
-            <Text style={styles.devLink}>LinkedIn</Text>
-          </TouchableOpacity>
+          <View style={styles.linkRow}>
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL("https://www.linkedin.com/in/shubham-ghude")
+              }
+            >
+              <Text style={styles.devLink}>LinkedIn</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL("mailto:shubhamghude808@gmail.com")
+              }
+            >
+              <Text style={styles.devLink}>Email</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         {/* Dev 2 */}
@@ -149,16 +156,25 @@ export default function FeedbackScreen() {
             Sujay Navghare
           </Text>
 
-          <TouchableOpacity
-            onPress={() =>
-              Linking.openURL("https://www.linkedin.com/in/sujaynavghare")
-            }
-          >
-            <Text style={styles.devLink}>LinkedIn</Text>
-          </TouchableOpacity>
+          <View style={styles.linkRow}>
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL("https://www.linkedin.com/in/sujaynavghare")
+              }
+            >
+              <Text style={styles.devLink}>LinkedIn</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL("mailto:sujaynavghare31@gmail.com")
+              }
+            >
+              <Text style={styles.devLink}>Email</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-
     </SafeAreaView>
   );
 }
@@ -167,7 +183,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    justifyContent: "space-between",
+  },
+
+  topContent: {
+    flex: 1, // 🔥 pushes contact section down properly
   },
 
   title: {
@@ -184,7 +203,6 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    // backgroundColor: "#4A90E2", // keep accent same
     padding: 15,
     borderRadius: 10,
   },
@@ -196,7 +214,6 @@ const styles = StyleSheet.create({
   },
 
   contactContainer: {
-    marginTop: 40,
     paddingTop: 20,
     borderTopWidth: 1,
   },
@@ -223,5 +240,12 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: "#4A90E2",
     marginTop: 4,
+    fontWeight: "600",
+  },
+
+  linkRow: {
+    flexDirection: "row",
+    gap: 20,
+    marginTop: 6,
   },
 });
