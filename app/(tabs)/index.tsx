@@ -1,14 +1,25 @@
 import { useRouter } from "expo-router";
-import { StyleSheet, Text, TouchableOpacity, ScrollView, useColorScheme } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  useColorScheme,
+} from "react-native";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import { Colors } from "../../constants/theme";
 
 export default function HomeScreen() {
   const router = useRouter();
 
-  // ✅ FIX: hook inside component
   const scheme = useColorScheme();
   const theme = Colors[scheme ?? "light"];
+
+  // ✅ FIX: get bottom safe area
+  const insets = useSafeAreaInsets();
 
   const topics = [
     "Coding Chaos",
@@ -32,9 +43,16 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: theme.background }]}
+      edges={["top", "left", "right"]} // ✅ avoid double bottom spacing
+    >
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingBottom: insets.bottom + 40, // ✅ FIX HERE
+        }}
+      >
         <Text style={[styles.title, { color: theme.text }]}>
           Topics
         </Text>
@@ -57,7 +75,6 @@ export default function HomeScreen() {
             </Text>
           </TouchableOpacity>
         ))}
-
       </ScrollView>
     </SafeAreaView>
   );
@@ -66,7 +83,9 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    // padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 20,
   },
 
   title: {
