@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import { Linking, useColorScheme } from "react-native";
 import {
-  Alert,
-  StyleSheet,
+  Alert, Linking, StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
-  View,
+  TouchableOpacity, useColorScheme, View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../../constants/theme";
@@ -139,6 +136,7 @@ export default function FeedbackScreen() {
             >
               <Text style={styles.devLink}>Email</Text>
             </TouchableOpacity>
+            
           </View>
         </View>
 
@@ -174,6 +172,17 @@ export default function FeedbackScreen() {
             </TouchableOpacity>
           </View>
         </View>
+      <View style={[styles.devCard, { backgroundColor: theme.card, borderColor: theme.border }]}>
+  <Text style={[styles.devName, { color: theme.text }]}>
+    Built with ❤️ by NSG.ai Labs
+  </Text>
+  <TouchableOpacity onPress={() => Linking.openURL("mailto:nsg.aiLabs@gmail.com")}>
+    <Text style={{ color: theme.icon, fontSize: 13, marginTop: 4 }}>
+      We're just an email away{" "}
+      <Text style={styles.devLink}>nsg.ailabs@gmail.com</Text>
+    </Text>
+  </TouchableOpacity>
+</View>
       </View>
     </SafeAreaView>
   );
