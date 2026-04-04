@@ -7,26 +7,52 @@ import {
   Text,
   View,
   useColorScheme,
+  TouchableOpacity,
+  TextInput,
+  Keyboard,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { data } from "../constants/data";
 import { Colors } from "../constants/theme";
+import { useState, useEffect } from "react";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function TopicScreen() {
   const { name } = useLocalSearchParams();
-  const questions = data[name as keyof typeof data] || [];
 
-  // ✅ THEME SETUP
+  const allQuestions = data[name as keyof typeof data] || [];
+
+  // 🔍 SEARCH STATE
+  const [search, setSearch] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
+
+  // 🔍 FILTER LOGIC
+  const questions = allQuestions.filter((item) =>
+    item.question.toLowerCase().includes(search.toLowerCase())
+  );
+
+  // 🎨 THEME
   const scheme = useColorScheme();
   const theme = Colors[scheme ?? "light"];
 
-  // 📋 Copy function
+  // 🔥 HIDE SEARCH WHEN KEYBOARD CLOSES
+  useEffect(() => {
+    const hideSub = Keyboard.addListener("keyboardDidHide", () => {
+      setShowSearch(false);
+    });
+
+    return () => {
+      hideSub.remove();
+    };
+  }, []);
+
+  // 📋 COPY
   const copyCode = (code: string) => {
     Clipboard.setStringAsync(code);
     Alert.alert("Copied!", "Code copied to clipboard");
   };
 
-  // 🧠 Parse ``` blocks
+  // 🧠 PARSE
   const parseContent = (text: string) => {
     const parts = text.split(/```[\s\S]*?```/g);
     const codeBlocks = text.match(/```([\s\S]*?)```/g) || [];
@@ -68,7 +94,7 @@ export default function TopicScreen() {
     return colors[Math.abs(hash) % colors.length];
   };
 
-  // 🎨 Syntax Highlighter
+  // 🎨 SYNTAX
   const highlightCode = (code: string) => {
     const keywords = [
       "const", "let", "var", "return", "class", "static", "if", "else",
@@ -112,27 +138,56 @@ export default function TopicScreen() {
       style={[styles.container, { backgroundColor: theme.background }]}
     >
       <ScrollView showsVerticalScrollIndicator={false}>
-        
-        <Text style={[styles.title, { color: theme.text }]}>
-          {name?.toString().toUpperCase()}
-        </Text>
 
+        {/* 🔥 HEADER */}
+        <View style={styles.header}>
+          <Text style={[styles.title, { color: theme.text }]}>
+            {name?.toString().toUpperCase()}
+          </Text>
+
+          <TouchableOpacity onPress={() => setShowSearch(!showSearch)}>
+            <Ionicons name="search" size={26} color={theme.text} />
+          </TouchableOpacity>
+        </View>
+
+        {/* 🔍 SEARCH INPUT */}
+        {showSearch && (
+          <TextInput
+            placeholder="Search questions..."
+            placeholderTextColor={theme.icon}
+            value={search}
+            onChangeText={setSearch}
+            returnKeyType="search"
+            onSubmitEditing={() => Keyboard.dismiss()}
+            style={[
+              styles.searchInput,
+              {
+                backgroundColor: theme.card,
+                borderColor: theme.border,
+                color: theme.text,
+              },
+            ]}
+          />
+        )}
+
+        {/* ❗ NO RESULTS */}
+        {questions.length === 0 && (
+          <Text style={{ color: theme.icon }}>No results found</Text>
+        )}
+
+        {/* 📚 QUESTIONS */}
         {questions.map((item, index) => {
           const parsed = parseContent(item.answer);
 
           return (
             <View key={index} style={styles.card}>
-
-              {/* Question */}
               <Text style={[styles.question, { color: theme.text }]}>
                 Q{index + 1}. {item.question}
               </Text>
 
-              {/* Content */}
               {parsed.map((block, i) =>
                 block.type === "code" ? (
                   <View key={i} style={styles.codeBox}>
-                    
                     <View style={styles.codeHeader}>
                       <Text style={styles.codeLabel}>Code</Text>
 
@@ -147,7 +202,6 @@ export default function TopicScreen() {
                     <Text style={styles.codeText}>
                       {highlightCode(block.content)}
                     </Text>
-
                   </View>
                 ) : (
                   <View
@@ -181,10 +235,23 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 15,
+  },
+
   title: {
     fontSize: 26,
     fontWeight: "bold",
-    marginBottom: 20,
+  },
+
+  searchInput: {
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 15,
   },
 
   card: {
