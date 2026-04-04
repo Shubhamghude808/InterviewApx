@@ -1,6 +1,6 @@
-export const data = 
+export const data =
 {
-  "Java Jitters": 
+  "Java Jitters":
   [
   {
     question: "Is Java platform independent?",
@@ -195,8 +195,6 @@ export const data =
     answer: "ClassNotFoundException occurs when you try to load a class at runtime using reflection and it isn't found; NoClassDefFoundError occurs when the class was present during compilation but is missing at runtime."
   }
 ],
-
-
   "Playwright Panic":[
   {
     question: "Playwright: Fast, Furious, and Still Failing on CI",
@@ -269,10 +267,6 @@ export const data =
   {
     question: "How do you negate assertions in Playwright?",
     answer: "You use the '.not' keyword before a matcher to verify negative conditions, such as 'expect(value).not.toBe(target)'."
-  },
-  {
-    question: "Does Playwright support XPath?",
-    answer: "Yes, Playwright automatically detects XPath if a selector starts with '//' or '..'. You can use these within 'page.locator()' to find elements."
   },
   {
     question: "What are the common Playwright command line options?",
@@ -415,15 +409,13 @@ export const data =
     answer: "Playwright supports multiple tabs/windows, native iFrame handling, and cross-domain testing, all of which are limitations in Cypress. It also supports multiple languages and the Safari WebKit engine."
   }
 ],
-
   "Git Glitches": [
    {
     question: "Git quick recap of essential Git commands",
     answer: " \n1. Setup & Configuration\nSet your username and email (attached to your commits):\n```\n\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"you@example.com\"\nCheck configuration: git config --list```\n\n2. Starting a Project\nInitialize a new local repository: ```\n\ngit init\nClone an existing remote repository: git clone <url>```\n\n3. Basic Workflow (Staging & Committing)\nCheck the state of your working directory: ```\n\ngit status\nAdd a specific file to staging area: git add <file>\nAdd all changed files to staging area: git add .\nCommit staged changes with a message: git commit -m \"Commit message\"\nModify the last commit (or add missed files): git commit --amend -m \"New message\"\n\n```4. Branching\nList all local branches: ```\n\ngit branch\nList all local and remote branches: git branch -a\nCreate a new branch: git branch <branch-name>\nSwitch to a branch (Older way): git checkout <branch-name>\nSwitch to a branch (Newer way): git switch <branch-name>\nCreate and switch to a new branch instantly: git checkout -b <branch-name> OR git switch -c <branch-name>\nDelete a branch: git branch -d <branch-name>\n\n```5. Merging & Rebasing\n```\n\nMerge <branch-name> into your current branch: git merge <branch-name>\nRebase your current branch onto <branch-name>: git rebase <branch-name>\nAbort a conflicting merge/rebase: git merge --abort OR git rebase --abort\n\n```6. Remote Repositories (Syncing)\nList remote connections: ```\n\ngit remote -v\nAdd a remote connection: git remote add origin <url>\nFetch changes from remote (doesn't merge): git fetch origin\nFetch and merge changes from remote: git pull origin <branch-name>\nPush local commits to remote: git push origin <branch-name>\nForce push (use with caution!): git push -f origin <branch-name>\n\n```7. Undoing Changes\nDiscard unstaged changes in a file: ```\n\ngit checkout -- <file> OR git restore <file>\nUnstage a file (keep changes): git reset HEAD <file> OR git restore --staged <file>\nUndo a commit by creating a new reversing commit (Safe): git revert <commit-hash>\nReset to a previous commit, keeping changes unstaged: git reset <commit-hash>\nReset to a previous commit, wiping all changes (Hard): git reset --hard <commit-hash>\n\n```8. Stashing (Temporary Storage)\nTemporarily save modified, tracked files: ```\n\ngit stash\nSave with a specific message: git stash push -m \"message\"\nList all stashes: git stash list\nApply the most recent stash and remove it from stash list: git stash pop\nApply the most recent stash (keep in stash list): git stash apply\nClear all stashes: git stash clear\n\n```9. History & Inspecting\nView commit history: ```\n\ngit log\nView history in a single line: git log --oneline\nShow changes made in a specific commit: git show <commit-hash>\nShow working directory differences not yet staged: git diff\nShow differences between staging and last commit: git diff --staged```"
     }
   ],
-
-  "Cucumber Confusion": 
+  "Cucumber Confusion":
   [
 {
     "question": "Translating Business English into Computer Confusion",
@@ -436,7 +428,6 @@ export const data =
  
 
   ],
-
   "AI Anxiety" : [
     {
       "question": "What is Artificial Intelligence (AI)?",
@@ -647,8 +638,6 @@ export const data =
       "answer": "Human-in-the-loop is a testing and operational methodology where human experts review, correct, or approve the AI's decisions before they are finalized. It is crucial in high-risk domains like healthcare or finance, ensuring that an AI's outputs are safe and accurate when automated metrics are insufficient."
     }
   ],
-
- 
   "Coding Chaos":[
   {
     "question": "Write a program to find the Maximum of 3 Numbers",
@@ -794,8 +783,7 @@ export const data =
     "question": "Write a program to Write Text file",
     "answer": "\n\n```ts\nimport * as fs from 'fs';\nclass WriteTextFile {\n  static write(filePath: string, data: string): void {\n    fs.writeFileSync(filePath, data, 'utf8');\n    console.log('File written successfully.');\n  }\n}\nWriteTextFile.write('./output.txt', 'Hello World');\n```\n\n"
   }
-],
-
+  ],
   "TypeScript Trouble": [
     {
       "question": "Explain the data types available in TypeScript.",
@@ -998,7 +986,6 @@ export const data =
       "answer": "Conditional Types allow you to dynamically assign a type based on a logical condition, functioning much like a ternary operator for the type system. They use the syntax `T extends U ? X : Y`. This means if type T is assignable to type U, the resulting type is X; otherwise, the resulting type is Y. They are extremely powerful for creating flexible, generic utility types."
     }
   ],
-
    "Selenium Struggles": [
     {
       "question": "Selenium Zero to Hero ...!!! quick recap",
@@ -1132,13 +1119,11 @@ export const data =
         "question": "What is an Object Repository?",
         "answer": "An Object Repository is a centralized location (properties file, XML, or Page Object class) where element locators are stored. Tests reference the repository rather than hardcoding locators, ensuring easier updates if the UI changes."
     }
-],
-
+  ],
 "SQL Survivors": [
   {
     "question": "SQL Interview Cheat Sheet ...!!! quick recap",
     "answer": "SQL Interview Cheat Sheet\n1. Basic Retrieval (SELECT, FROM, WHERE)\n```sql\nSELECT column1, column2\nFROM table_name\nWHERE condition;\n```\n\n2. Filtering and Sorting (AND, OR, IN, LIKE, ORDER BY)\n```sql\nSELECT * FROM employees\nWHERE department = 'IT' AND salary > 50000\nORDER BY salary DESC; -- ASC is default\n\n-- Pattern matching (% represents zero or more characters, _ represents one)\nSELECT * FROM users WHERE name LIKE 'A%'; -- Starts with A\n```\n\n3. Aggregate Functions & Grouping (COUNT, SUM, AVG, GROUP BY, HAVING)\nHAVING is used to filter groups, whereas WHERE is used to filter individual rows before grouping.\n```sql\nSELECT department, COUNT(emp_id) as total_emps, AVG(salary) as avg_salary\nFROM employees\nGROUP BY department\nHAVING COUNT(emp_id) > 5;\n```\n\n4. Joins (INNER, LEFT, RIGHT, FULL)\nCombines rows from two or more tables based on a related column between them.\n```sql\nSELECT e.name, d.department_name\nFROM employees e\nINNER JOIN departments d ON e.dept_id = d.id;\n\n-- LEFT JOIN: Returns all records from the left table, and the matched records from the right table.\n-- RIGHT JOIN: Returns all records from the right table, and the matched records from the left table.\n-- FULL OUTER JOIN: Returns all records when there is a match in either left or right table.\n```\n\n5. Subqueries & CTEs (Common Table Expressions)\nCTEs (WITH clause) make complex queries more readable and maintainable compared to heavily nested subqueries.\n```sql\n-- Subquery Example\nSELECT name FROM employees\nWHERE salary > (SELECT AVG(salary) FROM employees);\n\n-- CTE Example\nWITH HighEarners AS (\n    SELECT * FROM employees WHERE salary > 100000\n)\nSELECT * FROM HighEarners WHERE department = 'Sales';\n```\n\n6. Window Functions (ROW_NUMBER, RANK, DENSE_RANK)\nPerforms a calculation across a set of table rows that are related to the current row, without collapsing the rows like GROUP BY does.\n```sql\nSELECT name, department, salary,\n       ROW_NUMBER() OVER(PARTITION BY department ORDER BY salary DESC) as row_num,\n       RANK() OVER(PARTITION BY department ORDER BY salary DESC) as rank\nFROM employees;\n```\n\n7. Data Manipulation Language (DML: INSERT, UPDATE, DELETE)\n```sql\nINSERT INTO table_name (column1, column2) \nVALUES ('value1', 'value2');\n\nUPDATE table_name \nSET column1 = 'new_value' \nWHERE id = 1; -- ALWAYS remember the WHERE clause to avoid updating all rows!\n\nDELETE FROM table_name \nWHERE id = 1;\n\n-- TRUNCATE TABLE table_name; \n-- (DDL command: Removes all rows efficiently, resets identity, cannot be easily rolled back)\n```"
   }
-]
+  ]
 }
-
