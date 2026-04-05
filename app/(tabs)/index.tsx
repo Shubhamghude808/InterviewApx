@@ -1,9 +1,9 @@
 import { useRouter } from "expo-router";
 import {
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  ScrollView,
   useColorScheme,
 } from "react-native";
 import {
@@ -54,7 +54,7 @@ export default function HomeScreen() {
         }}
       >
         <Text style={[styles.title, { color: theme.text }]}>
-          Topics
+          Level Up Zone..!!
         </Text>
 
         {topics.map((topic) => (
