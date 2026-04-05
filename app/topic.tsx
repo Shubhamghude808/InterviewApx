@@ -106,7 +106,7 @@ export default function TopicScreen() {
       "def", "elif", "try", "except", "lambda", "None", "in", "is",
       "and", "or", "not",
       "SELECT", "FROM", "WHERE", "INSERT", "UPDATE", "DELETE", "JOIN",
-      "CREATE", "DROP", "ALTER"
+      "CREATE", "DROP", "ALTER","console", "log", "map", "filter", "reduce", "push", "pop", "shift", "unshift", "slice", "splice", "indexOf", "includes", "length", "Math", "Date", "JSON", "parseInt", "parseFloat", "setTimeout", "setInterval", "clearTimeout", "clearInterval", "Promise", "resolve", "reject", "then", "catch", "finally",
     ];
 
     return code.split("\n").map((line, lineIndex) => (
