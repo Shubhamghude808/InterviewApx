@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAM046SZWdghekooZO6_mfKJ-HHLP9WdEM",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "learn2shift-5fee2.firebaseapp.com",
   projectId: "learn2shift-5fee2",
   storageBucket: "learn2shift-5fee2.firebasestorage.app",
