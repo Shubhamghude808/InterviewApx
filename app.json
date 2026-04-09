@@ -17,7 +17,8 @@
         "backgroundColor": "#0A0F1C"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.learn2shift.app"
     },
     "web": {
       "output": "static",
@@ -41,6 +42,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "eaf66b5b-85ac-4357-953b-87d656d04d92"
+      }
     }
   }
 }
