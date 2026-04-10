@@ -38,7 +38,7 @@ export default function TopicScreen() {
   // 🔥 HIDE SEARCH WHEN KEYBOARD CLOSES
   useEffect(() => {
     const hideSub = Keyboard.addListener("keyboardDidHide", () => {
-      setShowSearch(false);
+      // setShowSearch(false);
     });
 
     return () => {
@@ -137,44 +137,50 @@ export default function TopicScreen() {
     <SafeAreaView
       style={[styles.container, { backgroundColor: theme.background }]}
     >
-      <ScrollView showsVerticalScrollIndicator={false}>
+      
 
         {/* 🔥 HEADER */}
         <View style={styles.header}>
-          <Text style={[styles.title, { color: theme.text }]}>
-            {name?.toString().toUpperCase()}
-          </Text>
+  <Text style={[styles.title, { color: theme.text }]}>
+    {name?.toString().toUpperCase()}
+  </Text>
 
-          <TouchableOpacity onPress={() => setShowSearch(!showSearch)}>
-            <Ionicons name="search" size={26} color={theme.text} />
-          </TouchableOpacity>
-        </View>
+  <TouchableOpacity onPress={() => setShowSearch(!showSearch)}>
+    <Ionicons name="search" size={26} color={theme.text} />
+  </TouchableOpacity>
+</View>
 
-        {/* 🔍 SEARCH INPUT */}
-        {showSearch && (
-          <TextInput
-            placeholder="Search questions..."
-            placeholderTextColor={theme.icon}
-            value={search}
-            onChangeText={setSearch}
-            returnKeyType="search"
-            onSubmitEditing={() => Keyboard.dismiss()}
-            style={[
-              styles.searchInput,
-              {
-                backgroundColor: theme.card,
-                borderColor: theme.border,
-                color: theme.text,
-              },
-            ]}
-          />
-        )}
+{/* 🔍 SEARCH INPUT */}
+{showSearch && (
+  <View style={[
+    styles.searchContainer,
+    { backgroundColor: theme.card, borderColor: theme.border }
+  ]}>
+    <TextInput
+      placeholder="Search questions..."
+      placeholderTextColor={theme.icon}
+      value={search}
+      onChangeText={setSearch}
+      returnKeyType="search"
+      onSubmitEditing={() => Keyboard.dismiss()}
+      style={[styles.searchInput, { color: theme.text }]}
+    />
+    {search.length > 0 && (
+      <TouchableOpacity onPress={() => setSearch("")}>
+        <Ionicons name="close-circle" size={20} color={theme.icon} />
+      </TouchableOpacity>
+    )}
+  </View>
+)}
 
-        {/* ❗ NO RESULTS */}
-        {questions.length === 0 && (
-          <Text style={{ color: theme.icon }}>No results found</Text>
-        )}
+{/* ❗ NO RESULTS */}
+{questions.length === 0 && (
+  <Text style={{ color: theme.icon }}>No results found</Text>
+)}
 
+
+
+      <ScrollView showsVerticalScrollIndicator={false}>
         {/* 📚 QUESTIONS */}
         {questions.map((item, index) => {
           const parsed = parseContent(item.answer);
@@ -248,11 +254,10 @@ const styles = StyleSheet.create({
   },
 
   searchInput: {
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 10,
-    marginBottom: 15,
-  },
+  flex: 1,
+  paddingVertical: 10,
+  fontSize: 15,
+},
 
   card: {
     marginBottom: 20,
@@ -305,4 +310,14 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 20,
   },
+  searchContainer: {
+  flexDirection: "row",
+  alignItems: "center",
+  borderWidth: 1,
+  borderRadius: 10,
+  paddingHorizontal: 12,
+  marginBottom: 16,
+  // marginHorizontal: 20,
+},
+
 });
