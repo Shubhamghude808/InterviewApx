@@ -12,39 +12,117 @@ import {
   Keyboard,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { data } from "../constants/data";
 import { Colors } from "../constants/theme";
 import { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 
+// 🔥 FIRESTORE
+import {
+  collection,
+  getDocs,
+  query,
+  limit,
+  startAfter,
+} from "firebase/firestore";
+import { db } from "../firebaseConfig";
+
 export default function TopicScreen() {
   const { name } = useLocalSearchParams();
 
-  const allQuestions = data[name as keyof typeof data] || [];
+  // 🔥 STATE
+  const [allQuestions, setAllQuestions] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [lastDoc, setLastDoc] = useState<any>(null);
+  const [hasMore, setHasMore] = useState(true);
 
-  // 🔍 SEARCH STATE
+  // 🔍 SEARCH
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
-
-  // 🔍 FILTER LOGIC
-  const questions = allQuestions.filter((item) =>
-    item.question.toLowerCase().includes(search.toLowerCase())
-  );
 
   // 🎨 THEME
   const scheme = useColorScheme();
   const theme = Colors[scheme ?? "light"];
 
-  // 🔥 HIDE SEARCH WHEN KEYBOARD CLOSES
-  useEffect(() => {
-    const hideSub = Keyboard.addListener("keyboardDidHide", () => {
-      // setShowSearch(false);
-    });
+  // 🔥 INITIAL FETCH
+  const fetchInitial = async () => {
+  try {
+    const q = query(
+      collection(db, "topics", name as string, "questions"),
+      limit(10)
+    );
 
-    return () => {
-      hideSub.remove();
-    };
-  }, []);
+    const snapshot = await getDocs(q);
+
+    const data = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    setAllQuestions(data);
+    setLastDoc(snapshot.docs[snapshot.docs.length - 1]);
+
+    // 🚀 start background fetch
+    fetchRemaining(snapshot.docs[snapshot.docs.length - 1]);
+
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
+  }
+};
+
+  // 🔥 LOAD MORE
+  const fetchRemaining = async (lastVisibleDoc: any) => {
+  if (!lastVisibleDoc) return;
+
+  setLoadingMore(true);
+
+  try {
+    let currentLastDoc = lastVisibleDoc;
+    let allNewData: any[] = [];
+
+    while (true) {
+      const q = query(
+        collection(db, "topics", name as string, "questions"),
+        startAfter(currentLastDoc),
+        limit(20) // batch size
+      );
+
+      const snapshot = await getDocs(q);
+
+      if (snapshot.empty) break;
+
+      const batch = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      allNewData = [...allNewData, ...batch];
+
+      currentLastDoc = snapshot.docs[snapshot.docs.length - 1];
+
+      if (snapshot.docs.length < 20) break;
+    }
+
+    // 🚀 append all at once
+    setAllQuestions((prev) => [...prev, ...allNewData]);
+
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoadingMore(false);
+  }
+};
+
+  useEffect(() => {
+    if (name) fetchInitial();
+  }, [name]);
+
+  // 🔍 FILTER
+  const questions = allQuestions.filter((item) =>
+    item.question.toLowerCase().includes(search.toLowerCase())
+  );
 
   // 📋 COPY
   const copyCode = (code: string) => {
@@ -77,50 +155,18 @@ export default function TopicScreen() {
     return result;
   };
 
-  const colors = [
-    "#569CD6",
-    "#CE9178",
-    "#4EC9B0",
-    "#DCDCAA",
-    "#C586C0",
-    "#9CDCFE",
-  ];
-
-  const getColorForKeyword = (word: string) => {
-    let hash = 0;
-    for (let i = 0; i < word.length; i++) {
-      hash = word.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    return colors[Math.abs(hash) % colors.length];
-  };
-
-  // 🎨 SYNTAX
+  // 🎨 CODE HIGHLIGHT
   const highlightCode = (code: string) => {
-    const keywords = [
-      "const", "let", "var", "return", "class", "static", "if", "else",
-      "for", "while", "import", "from", "function", "true", "false",
-      "Switch", "case", "break", "default", "String", "Set",
-      "async", "await", "export", "interface", "type", "enum", "null",
-      "public", "private", "protected", "final", "void", "new", "this",
-      "extends", "implements",
-      "def", "elif", "try", "except", "lambda", "None", "in", "is",
-      "and", "or", "not",
-      "SELECT", "FROM", "WHERE", "INSERT", "UPDATE", "DELETE", "JOIN",
-      "CREATE", "DROP", "ALTER","console", "log", "map", "filter", "reduce", "push", "pop", "shift", "unshift", "slice", "splice", "indexOf", "includes", "length", "Math", "Date", "JSON", "parseInt", "parseFloat", "setTimeout", "setInterval", "clearTimeout", "clearInterval", "Promise", "resolve", "reject", "then", "catch", "finally",
-    ];
+    const keywords = ["const", "let", "return", "class", "if", "else", "for", "while"];
 
     return code.split("\n").map((line, lineIndex) => (
-      <Text key={lineIndex} style={{ flexWrap: "wrap" }}>
+      <Text key={lineIndex}>
         {line.split(" ").map((word, wordIndex) => {
           let color = "#D4D4D4";
 
-          if (keywords.includes(word)) {
-            color = getColorForKeyword(word);
-          } else if (word.startsWith("//")) {
-            color = "#6A9955";
-          } else if (word.includes("'") || word.includes('"')) {
-            color = "#CE9178";
-          }
+          if (keywords.includes(word)) color = "#569CD6";
+          else if (word.startsWith("//")) color = "#6A9955";
+          else if (word.includes("'") || word.includes('"')) color = "#CE9178";
 
           return (
             <Text key={wordIndex} style={{ color }}>
@@ -137,109 +183,128 @@ export default function TopicScreen() {
     <SafeAreaView
       style={[styles.container, { backgroundColor: theme.background }]}
     >
-      
+      {/* HEADER */}
+      <View style={styles.header}>
+        <Text style={[styles.title, { color: theme.text }]}>
+          {name ? name.toString().toUpperCase() : "LOADING..."}
+        </Text>
 
-        {/* 🔥 HEADER */}
-        <View style={styles.header}>
-  <Text style={[styles.title, { color: theme.text }]}>
-    {name?.toString().toUpperCase()}
-  </Text>
+        <TouchableOpacity onPress={() => setShowSearch(!showSearch)}>
+          <Ionicons name="search" size={26} color={theme.text} />
+        </TouchableOpacity>
+      </View>
 
-  <TouchableOpacity onPress={() => setShowSearch(!showSearch)}>
-    <Ionicons name="search" size={26} color={theme.text} />
-  </TouchableOpacity>
-</View>
+      {/* SEARCH */}
+      {showSearch && (
+        <View
+          style={[
+            styles.searchContainer,
+            { backgroundColor: theme.card, borderColor: theme.border },
+          ]}
+        >
+          <TextInput
+            placeholder="Search questions..."
+            placeholderTextColor={theme.icon}
+            value={search}
+            onChangeText={setSearch}
+            style={[styles.searchInput, { color: theme.text }]}
+          />
+        </View>
+      )}
 
-{/* 🔍 SEARCH INPUT */}
-{showSearch && (
-  <View style={[
-    styles.searchContainer,
-    { backgroundColor: theme.card, borderColor: theme.border }
-  ]}>
-    <TextInput
-      placeholder="Search questions..."
-      placeholderTextColor={theme.icon}
-      value={search}
-      onChangeText={setSearch}
-      returnKeyType="search"
-      onSubmitEditing={() => Keyboard.dismiss()}
-      style={[styles.searchInput, { color: theme.text }]}
-    />
-    {search.length > 0 && (
-      <TouchableOpacity onPress={() => setSearch("")}>
-        <Ionicons name="close-circle" size={20} color={theme.icon} />
-      </TouchableOpacity>
-    )}
-  </View>
-)}
+      {/* NO RESULTS */}
+      {!loading && questions.length === 0 && (
+        <Text style={{ color: theme.icon }}>No results found</Text>
+      )}
 
-{/* ❗ NO RESULTS */}
-{questions.length === 0 && (
-  <Text style={{ color: theme.icon }}>No results found</Text>
-)}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        onMomentumScrollEnd={({ nativeEvent }) => {
+          const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
 
+          const isEndReached =
+            layoutMeasurement.height + contentOffset.y >=
+            contentSize.height - 20;
 
+          if (isEndReached) fetchRemaining(lastDoc);
+        }}
+      >
+        {/* 🔥 SKELETON */}
+        {loading ? (
+          <>
+            {[1, 2, 3].map((_, i) => (
+              <View key={i} style={{ marginBottom: 20 }}>
+                <View style={{ height: 20, backgroundColor: "#333", borderRadius: 4, marginBottom: 10 }} />
+                <View style={{ height: 80, backgroundColor: "#333", borderRadius: 10 }} />
+              </View>
+            ))}
+          </>
+        ) : (
+          <>
+            {questions.map((item, index) => {
+              const parsed = parseContent(item.answer);
 
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {/* 📚 QUESTIONS */}
-        {questions.map((item, index) => {
-          const parsed = parseContent(item.answer);
+              return (
+                <View key={index} style={styles.card}>
+                  <Text style={[styles.question, { color: theme.text }]}>
+                    Q{index + 1}. {item.question}
+                  </Text>
 
-          return (
-            <View key={index} style={styles.card}>
-              <Text style={[styles.question, { color: theme.text }]}>
-                Q{index + 1}. {item.question}
-              </Text>
+                  {parsed.map((block, i) =>
+                    block.type === "code" ? (
+                      <View key={i} style={styles.codeBox}>
+                        <View style={styles.codeHeader}>
+                          <Text style={styles.codeLabel}>Code</Text>
 
-              {parsed.map((block, i) =>
-                block.type === "code" ? (
-                  <View key={i} style={styles.codeBox}>
-                    <View style={styles.codeHeader}>
-                      <Text style={styles.codeLabel}>Code</Text>
+                          <Text
+                            style={styles.copyText}
+                            onPress={() => copyCode(block.content)}
+                          >
+                            Copy
+                          </Text>
+                        </View>
 
-                      <Text
-                        style={styles.copyText}
-                        onPress={() => copyCode(block.content)}
+                        <Text style={styles.codeText}>
+                          {highlightCode(block.content)}
+                        </Text>
+                      </View>
+                    ) : (
+                      <View
+                        key={i}
+                        style={[
+                          styles.textBox,
+                          {
+                            backgroundColor:
+                              scheme === "dark" ? "#1E2228" : theme.card,
+                            borderColor: theme.border,
+                          },
+                        ]}
                       >
-                        Copy
-                      </Text>
-                    </View>
+                        <Text style={[styles.answerText, { color: theme.text }]}>
+                          {block.content}
+                        </Text>
+                      </View>
+                    )
+                  )}
+                </View>
+              );
+            })}
 
-                    <Text style={styles.codeText}>
-                      {highlightCode(block.content)}
-                    </Text>
-                  </View>
-                ) : (
-                  <View
-                    key={i}
-                    style={[
-                      styles.textBox,
-                      {
-                        backgroundColor:
-                          scheme === "dark" ? "#1E2228" : theme.card,
-                        borderColor: theme.border,
-                      },
-                    ]}
-                  >
-                    <Text style={[styles.answerText, { color: theme.text }]}>
-                      {block.content}
-                    </Text>
-                  </View>
-                )
-              )}
-            </View>
-          );
-        })}
+            {/* 🔥 LOAD MORE */}
+            {loadingMore && (
+              <Text style={{ textAlign: "center", marginVertical: 10 }}>
+                Loading more...
+              </Text>
+            )}
+          </>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
+  container: { flex: 1, padding: 20 },
 
   header: {
     flexDirection: "row",
@@ -248,26 +313,22 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
 
-  title: {
-    fontSize: 26,
-    fontWeight: "bold",
+  title: { fontSize: 26, fontWeight: "bold" },
+
+  searchInput: { flex: 1, paddingVertical: 10 },
+
+  searchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    marginBottom: 16,
   },
 
-  searchInput: {
-  flex: 1,
-  paddingVertical: 10,
-  fontSize: 15,
-},
+  card: { marginBottom: 20 },
 
-  card: {
-    marginBottom: 20,
-  },
-
-  question: {
-    fontSize: 16,
-    fontWeight: "600",
-    marginBottom: 8,
-  },
+  question: { fontSize: 16, fontWeight: "600", marginBottom: 8 },
 
   textBox: {
     borderWidth: 1,
@@ -276,10 +337,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
 
-  answerText: {
-    fontSize: 14,
-    lineHeight: 20,
-  },
+  answerText: { fontSize: 14, lineHeight: 20 },
 
   codeBox: {
     backgroundColor: "#1E1E1E",
@@ -294,10 +352,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 
-  codeLabel: {
-    color: "#aaa",
-    fontSize: 12,
-  },
+  codeLabel: { color: "#aaa", fontSize: 12 },
 
   copyText: {
     color: "#4DA6FF",
@@ -310,14 +365,4 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 20,
   },
-  searchContainer: {
-  flexDirection: "row",
-  alignItems: "center",
-  borderWidth: 1,
-  borderRadius: 10,
-  paddingHorizontal: 12,
-  marginBottom: 16,
-  // marginHorizontal: 20,
-},
-
 });
