@@ -29,23 +29,31 @@ export default function HomeScreen() {
   const [clicked, setClicked] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchTopics = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "topics"));
-        const data: Topic[] = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...(doc.data() as Omit<Topic, "id">),
-        }));
-        setTopics(data);
-      } catch (err) {
-        setError("Failed to load topics");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchTopics();
-  }, []);
+ useEffect(() => {
+  const fetchTopics = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "topics"));
+
+      const data: Topic[] = querySnapshot.docs.map((doc) => {
+  const docData = doc.data();
+
+  return {
+    id: doc.id,
+    title: docData.name || doc.id, // ✅ FIX
+    icon: docData.icon || undefined, // ✅ optional safe
+  };
+});
+
+      setTopics(data);
+    } catch (err) {
+      setError("Failed to load topics");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchTopics();
+}, []);
 
   const handlePress = (topic: Topic) => {
     if (clicked) return;
