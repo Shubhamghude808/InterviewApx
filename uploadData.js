@@ -1,34 +1,42 @@
 //Unused file to upload data to Firestore. Run once and then comment this file.
+import { doc, setDoc } from "firebase/firestore";
+import { data } from "./constants/data";
+import { db } from "./firebaseConfig";
 
-// import { db } from "./firebaseConfig";
-// import { collection, doc, setDoc, addDoc } from "firebase/firestore";
-// import { data } from "./constants/data"; // your file
+const uploadData = async () => {
+  try {
+    for (const topicName in data) {
+      // ✅ 1. Create topic document
+      const topicRef = doc(db, "topics", topicName);
 
-// const uploadData = async () => {
-//   try {
-//     for (const topicName in data) {
-//       // 1. Create topic document
-//       const topicRef = doc(db, "topics", topicName);
+      await setDoc(topicRef, {
+        name: topicName,
+      });
 
-//       await setDoc(topicRef, {
-//         name: topicName,
-//       });
+      const questions = data[topicName];
 
-//       // 2. Add questions as subcollection
-//       const questions = data[topicName];
+      for (const item of questions) {
+        // 🔥 CREATE UNIQUE CLEAN ID
+        const cleanId = item.question
+          .trim()
+          .toLowerCase()
+          .replace(/\s+/g, " ")
+          .replace(/[^\w\s]/gi, ""); // remove special chars
 
-//       for (const item of questions) {
-//         await addDoc(collection(topicRef, "questions"), {
-//           question: item.question,
-//           answer: item.answer,
-//         });
-//       }
-//     }
+        const questionRef = doc(topicRef, "questions", cleanId);
 
-//     console.log("🔥 Data uploaded successfully");
-//   } catch (error) {
-//     console.error("❌ Error uploading data:", error);
-//   }
-// };
+        // ✅ 2. Use setDoc (NO DUPLICATES)
+        await setDoc(questionRef, {
+          question: item.question,
+          answer: item.answer,
+        });
+      }
+    }
 
-// export default uploadData;
+    console.log("🔥 Data uploaded successfully (NO DUPLICATES)");
+  } catch (error) {
+    console.error("❌ Error uploading data:", error);
+  }
+};
+
+export default uploadData;

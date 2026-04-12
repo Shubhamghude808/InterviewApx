@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import * as Clipboard from "expo-clipboard";
 import { useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Alert,
   ScrollView,
@@ -10,13 +10,12 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  useColorScheme
+  useColorScheme,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../constants/theme";
 import { useFontSize } from "../context/FontSizeContext";
 
-// 🔥 FIRESTORE
 import {
   collection,
   getDocs,
@@ -30,91 +29,92 @@ export default function TopicScreen() {
   const { name } = useLocalSearchParams();
   const { fontSizeMultiplier } = useFontSize();
 
-  // 🔥 STATE
   const [allQuestions, setAllQuestions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [lastDoc, setLastDoc] = useState<any>(null);
-  const [hasMore, setHasMore] = useState(true);
 
-  // 🔍 SEARCH
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
 
-  // 🎨 THEME
+  const isFetchingAllRef = useRef(false);
+
   const scheme = useColorScheme();
   const theme = Colors[scheme ?? "light"];
 
-  // 🔥 INITIAL FETCH
+  // 🔥 INITIAL FETCH (FAST)
   const fetchInitial = async () => {
-  try {
-    const q = query(
-      collection(db, "topics", name as string, "questions"),
-      limit(5) // fetch only 5 to get lastDoc for pagination
-    );
-
-    const snapshot = await getDocs(q);
-
-    const data = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    setAllQuestions(data);
-    setLastDoc(snapshot.docs[snapshot.docs.length - 1]);
-
-    // 🚀 start background fetch
-    fetchRemaining(snapshot.docs[snapshot.docs.length - 1]);
-
-  } catch (error) {
-    console.error(error);
-  } finally {
-    setLoading(false);
-  }
-};
-
-  // 🔥 LOAD MORE
-  const fetchRemaining = async (lastVisibleDoc: any) => {
-  if (!lastVisibleDoc) return;
-
-  setLoadingMore(true);
-
-  try {
-    let currentLastDoc = lastVisibleDoc;
-    let allNewData: any[] = [];
-
-    while (true) {
+    try {
       const q = query(
         collection(db, "topics", name as string, "questions"),
-        startAfter(currentLastDoc),
-        limit(10) // batch size
+        limit(5)
       );
 
       const snapshot = await getDocs(q);
 
-      if (snapshot.empty) break;
-
-      const batch = snapshot.docs.map((doc) => ({
+      const data = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
 
-      allNewData = [...allNewData, ...batch];
+      setAllQuestions(data);
 
-      currentLastDoc = snapshot.docs[snapshot.docs.length - 1];
+      const lastVisible = snapshot.docs[snapshot.docs.length - 1];
 
-      if (snapshot.docs.length < 20) break;
+      // 🚀 Background load
+      fetchAllRemaining(lastVisible);
+
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    // 🚀 append all at once
-    setAllQuestions((prev) => [...prev, ...allNewData]);
+  // 🔥 BACKGROUND LOADING (NO SCROLL)
+  const fetchAllRemaining = async (startDoc: any) => {
+    if (!startDoc || isFetchingAllRef.current) return;
 
-  } catch (error) {
-    console.error(error);
-  } finally {
-    setLoadingMore(false);
-  }
-};
+    isFetchingAllRef.current = true;
+    setLoadingMore(true);
+
+    try {
+      let currentLastDoc = startDoc;
+
+      while (true) {
+        const q = query(
+          collection(db, "topics", name as string, "questions"),
+          startAfter(currentLastDoc),
+          limit(10)
+        );
+
+        const snapshot = await getDocs(q);
+
+        if (snapshot.empty) break;
+
+        const newData = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        // ✅ SAFE MERGE (NO DUPLICATES)
+        setAllQuestions((prev) => {
+          const map = new Map(prev.map((item) => [item.id, item]));
+          newData.forEach((item) => map.set(item.id, item));
+          return Array.from(map.values());
+        });
+
+        currentLastDoc = snapshot.docs[snapshot.docs.length - 1];
+
+        if (snapshot.docs.length < 10) break;
+      }
+
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoadingMore(false);
+      isFetchingAllRef.current = false;
+    }
+  };
 
   useEffect(() => {
     if (name) fetchInitial();
@@ -181,9 +181,7 @@ export default function TopicScreen() {
   };
 
   return (
-    <SafeAreaView
-      style={[styles.container, { backgroundColor: theme.background }]}
-    >
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
       {/* HEADER */}
       <View style={styles.header}>
         <Text style={[styles.title, { color: theme.text, fontSize: 26 * fontSizeMultiplier }]}>
@@ -197,12 +195,7 @@ export default function TopicScreen() {
 
       {/* SEARCH */}
       {showSearch && (
-        <View
-          style={[
-            styles.searchContainer,
-            { backgroundColor: theme.card, borderColor: theme.border },
-          ]}
-        >
+        <View style={[styles.searchContainer, { backgroundColor: theme.card, borderColor: theme.border }]}>
           <TextInput
             placeholder="Search questions..."
             placeholderTextColor={theme.icon}
@@ -213,24 +206,8 @@ export default function TopicScreen() {
         </View>
       )}
 
-      {/* NO RESULTS */}
-      {!loading && questions.length === 0 && (
-        <Text style={{ color: theme.icon }}>No results found</Text>
-      )}
-
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        onMomentumScrollEnd={({ nativeEvent }) => {
-          const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
-
-          const isEndReached =
-            layoutMeasurement.height + contentOffset.y >=
-            contentSize.height - 20;
-
-          if (isEndReached) fetchRemaining(lastDoc);
-        }}
-      >
-        {/* 🔥 SKELETON */}
+      {/* CONTENT */}
+      <ScrollView showsVerticalScrollIndicator={false}>
         {loading ? (
           <>
             {[1, 2, 3].map((_, i) => (
@@ -242,14 +219,21 @@ export default function TopicScreen() {
           </>
         ) : (
           <>
-            {questions.map((item, index) => {
-              const parsed = parseContent(item.answer);
+            {questions.length === 0 ? (
+              <View style={{ flex: 1, justifyContent: "center", alignItems: "center", paddingVertical: 40 }}>
+                <Text style={[styles.noResultsText, { color: theme.icon, fontSize: 16 * fontSizeMultiplier }]}>
+                  No results found
+                </Text>
+              </View>
+            ) : (
+              questions.map((item, index) => {
+                const parsed = parseContent(item.answer);
 
-              return (
-                <View key={index} style={styles.card}>
-                  <Text style={[styles.question, { color: theme.text, fontSize: 16 * fontSizeMultiplier }]}>
-                    Q{index + 1}. {item.question}
-                  </Text>
+                return (
+                  <View key={item.id} style={styles.card}>
+                    <Text style={[styles.question, { color: theme.text, fontSize: 16 * fontSizeMultiplier }]}>
+                      Q{index + 1}. {item.question}
+                    </Text>
 
                   {parsed.map((block, i) =>
                     block.type === "code" ? (
@@ -275,8 +259,7 @@ export default function TopicScreen() {
                         style={[
                           styles.textBox,
                           {
-                            backgroundColor:
-                              scheme === "dark" ? "#1E2228" : theme.card,
+                            backgroundColor: scheme === "dark" ? "#1E2228" : theme.card,
                             borderColor: theme.border,
                           },
                         ]}
@@ -289,9 +272,10 @@ export default function TopicScreen() {
                   )}
                 </View>
               );
-            })}
+              })
+            )}
 
-            {/* 🔥 LOAD MORE */}
+            {/* 🔥 BACKGROUND LOADING INDICATOR */}
             {loadingMore && (
               <Text style={{ textAlign: "center", marginVertical: 10 }}>
                 Loading more...
@@ -314,7 +298,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
 
-  title: { fontSize: 26, fontWeight: "bold" },
+  title: { fontWeight: "bold" },
 
   searchInput: { flex: 1, paddingVertical: 10 },
 
@@ -329,7 +313,7 @@ const styles = StyleSheet.create({
 
   card: { marginBottom: 20 },
 
-  question: { fontSize: 16, fontWeight: "600", marginBottom: 8 },
+  question: { fontWeight: "600", marginBottom: 8 },
 
   textBox: {
     borderWidth: 1,
@@ -338,7 +322,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
 
-  answerText: { fontSize: 14, lineHeight: 20 },
+  answerText: { lineHeight: 20 },
 
   codeBox: {
     backgroundColor: "#1E1E1E",
@@ -353,17 +337,20 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 
-  codeLabel: { color: "#aaa", fontSize: 12 },
+  codeLabel: { color: "#aaa" },
 
   copyText: {
     color: "#4DA6FF",
-    fontSize: 12,
     fontWeight: "600",
   },
 
   codeText: {
     fontFamily: "monospace",
-    fontSize: 13,
     lineHeight: 20,
+  },
+
+  noResultsText: {
+    textAlign: "center",
+    fontWeight: "600",
   },
 });

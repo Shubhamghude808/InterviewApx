@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import {
-    Alert, Linking, StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity, useColorScheme, View
+  Alert,
+  KeyboardAvoidingView,
+  Linking,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  useColorScheme,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../../constants/theme";
@@ -42,150 +49,300 @@ export default function FeedbackScreen() {
   return (
     <SafeAreaView
       style={[styles.container, { backgroundColor: theme.background }]}
-      edges={["top"]} // ✅ removes bottom gap
+      edges={["top"]}
     >
-      {/* 🔥 TOP CONTENT */}
-      <View style={styles.topContent}>
-        <Text style={[styles.title, { color: theme.text, fontSize: 30 * fontSizeMultiplier }]}>
-          Share Your Thoughts
-        </Text>
-
-        <TextInput
-          placeholder="Your Email"
-          placeholderTextColor={theme.icon}
-          value={email}
-          onChangeText={setEmail}
-          style={[
-            styles.input,
-            {
-              backgroundColor: theme.card,
-              borderColor: theme.border,
-              color: theme.text,
-            },
-          ]}
-        />
-
-        <TextInput
-          placeholder="Your Message"
-          placeholderTextColor={theme.icon}
-          value={message}
-          onChangeText={setMessage}
-          multiline
-          textAlignVertical="top"
-          style={[
-            styles.input,
-            {
-              height: 120,
-              backgroundColor: theme.card,
-              borderColor: theme.border,
-              color: theme.text,
-            },
-          ]}
-        />
-
-        <TouchableOpacity
-          style={[
-            styles.button,
-            {
-              backgroundColor:
-                scheme === "dark" ? "#2563EB" : "#4A90E2",
-            },
-          ]}
-          onPress={handleSubmit}
-        >
-          <Text style={[styles.buttonText, { fontSize: 16 * fontSizeMultiplier }]}>Submit</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* 🔥 BOTTOM CONTACT */}
-      <View
-        style={[
-          styles.contactContainer,
-          { borderTopColor: theme.border },
-        ]}
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
-        <Text style={[styles.contactTitle, { color: theme.text, fontSize: 18 * fontSizeMultiplier }]}>
-          Contact Us
-        </Text>
-
-        {/* Dev 1 */}
-        <View
-          style={[
-            styles.devCard,
-            {
-              backgroundColor: theme.card,
-              borderColor: theme.border,
-            },
-          ]}
+        <ScrollView
+          contentContainerStyle={{ paddingBottom: 120 }}
+          showsVerticalScrollIndicator={false}
         >
-          <Text style={[styles.devName, { color: theme.text, fontSize: 14 * fontSizeMultiplier }]}>
-            Shubham Ghude
+          {/* 🔥 TITLE */}
+          <Text
+            style={[
+              styles.title,
+              {
+                color: theme.text,
+                fontSize: 30 * fontSizeMultiplier,
+                lineHeight: 36 * fontSizeMultiplier,
+                marginBottom: 20 * fontSizeMultiplier,
+              },
+            ]}
+          >
+            Share Your Thoughts
           </Text>
 
-          <View style={styles.linkRow}>
-            <TouchableOpacity
-              onPress={() =>
-                Linking.openURL("https://www.linkedin.com/in/shubham-ghude")
-              }
-            >
-              <Text style={[styles.devLink, { fontSize: 13 * fontSizeMultiplier }]}>LinkedIn</Text>
-            </TouchableOpacity>
+          {/* 🔥 EMAIL INPUT */}
+          <TextInput
+            placeholder="Your Email"
+            placeholderTextColor={theme.icon}
+            value={email}
+            onChangeText={setEmail}
+            style={[
+              styles.input,
+              {
+                backgroundColor: theme.card,
+                borderColor: theme.border,
+                color: theme.text,
+                fontSize: 14 * fontSizeMultiplier,
+                padding: 12 * fontSizeMultiplier,
+                marginBottom: 15 * fontSizeMultiplier,
+              },
+            ]}
+          />
 
-            <TouchableOpacity
-              onPress={() =>
-                Linking.openURL("mailto:shubhamghude808@gmail.com")
-              }
-            >
-              <Text style={[styles.devLink, { fontSize: 13 * fontSizeMultiplier }]}>Email</Text>
-            </TouchableOpacity>
-            
-          </View>
-        </View>
+          {/* 🔥 MESSAGE INPUT */}
+          <TextInput
+            placeholder="Your Message"
+            placeholderTextColor={theme.icon}
+            value={message}
+            onChangeText={setMessage}
+            multiline
+            textAlignVertical="top"
+            style={[
+              styles.input,
+              {
+                height: 140 * fontSizeMultiplier,
+                backgroundColor: theme.card,
+                borderColor: theme.border,
+                color: theme.text,
+                fontSize: 14 * fontSizeMultiplier,
+                padding: 12 * fontSizeMultiplier,
+                marginBottom: 15 * fontSizeMultiplier,
+              },
+            ]}
+          />
 
-        {/* Dev 2 */}
-        <View
-          style={[
-            styles.devCard,
-            {
-              backgroundColor: theme.card,
-              borderColor: theme.border,
-            },
-          ]}
-        >
-          <Text style={[styles.devName, { color: theme.text, fontSize: 14 * fontSizeMultiplier }]}>
-            Sujay Navghare
-          </Text>
-
-          <View style={styles.linkRow}>
-            <TouchableOpacity
-              onPress={() =>
-                Linking.openURL("https://www.linkedin.com/in/sujaynavghare")
-              }
+          {/* 🔥 SUBMIT BUTTON */}
+          <TouchableOpacity
+            style={[
+              styles.button,
+              {
+                backgroundColor:
+                  scheme === "dark" ? "#2563EB" : "#4A90E2",
+                padding: 15 * fontSizeMultiplier,
+                marginTop: 10 * fontSizeMultiplier,
+              },
+            ]}
+            onPress={handleSubmit}
+          >
+            <Text
+              style={[
+                styles.buttonText,
+                {
+                  fontSize: 16 * fontSizeMultiplier,
+                  lineHeight: 20 * fontSizeMultiplier,
+                },
+              ]}
             >
-              <Text style={[styles.devLink, { fontSize: 13 * fontSizeMultiplier }]}>LinkedIn</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() =>
-                Linking.openURL("mailto:sujaynavghare31@gmail.com")
-              }
-            >
-              <Text style={[styles.devLink, { fontSize: 13 * fontSizeMultiplier }]}>Email</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={[styles.devCard, { backgroundColor: theme.card, borderColor: theme.border }]}>
-          <Text style={[styles.devName, { color: theme.text, fontSize: 14 * fontSizeMultiplier }]}>
-            Built with ❤️ by NSG.ai Labs
-          </Text>
-          <TouchableOpacity onPress={() => Linking.openURL("mailto:nsg.aiLabs@gmail.com")}>
-            <Text style={{ color: theme.icon, fontSize: 13 * fontSizeMultiplier, marginTop: 4 }}>
-              We're just an email away{" "}
-              <Text style={[styles.devLink, { fontSize: 13 * fontSizeMultiplier }]}>nsg.ailabs@gmail.com</Text>
+              Submit
             </Text>
           </TouchableOpacity>
-        </View>
-      </View>
+
+          {/* 🔥 CONTACT SECTION */}
+          <View
+            style={[
+              styles.contactContainer,
+              {
+                borderTopColor: theme.border,
+                marginTop: 30 * fontSizeMultiplier,
+              },
+            ]}
+          >
+            <Text
+              style={[
+                styles.contactTitle,
+                {
+                  color: theme.text,
+                  fontSize: 18 * fontSizeMultiplier,
+                  lineHeight: 22 * fontSizeMultiplier,
+                  marginBottom: 10 * fontSizeMultiplier,
+                },
+              ]}
+            >
+              Contact Us
+            </Text>
+
+            {/* Dev 1 */}
+            <View
+              style={[
+                styles.devCard,
+                {
+                  backgroundColor: theme.card,
+                  borderColor: theme.border,
+                  padding: 12 * fontSizeMultiplier,
+                  marginBottom: 10 * fontSizeMultiplier,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.devName,
+                  {
+                    color: theme.text,
+                    fontSize: 14 * fontSizeMultiplier,
+                    lineHeight: 18 * fontSizeMultiplier,
+                  },
+                ]}
+              >
+                Shubham Ghude
+              </Text>
+
+              <View style={[styles.linkRow, { marginTop: 6 * fontSizeMultiplier }]}>
+                <TouchableOpacity
+                  onPress={() =>
+                    
+                    Linking.openURL(
+                      "https://www.linkedin.com/in/shubham-ghude"
+                    )
+                  }
+                >
+                  <Text
+                    style={[
+                      styles.devLink,
+                      { fontSize: 13 * fontSizeMultiplier, marginTop: 4 * fontSizeMultiplier },
+                    ]}
+                  >
+                    LinkedIn
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() =>
+                    Linking.openURL(
+                      "mailto:shubhamghude808@gmail.com"
+                    )
+                  }
+                >
+                  <Text
+                    style={[
+                      styles.devLink,
+                      { fontSize: 13 * fontSizeMultiplier, marginTop: 4 * fontSizeMultiplier },
+                    ]}
+                  >
+                    Email
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            {/* Dev 2 */}
+            <View
+              style={[
+                styles.devCard,
+                {
+                  backgroundColor: theme.card,
+                  borderColor: theme.border,
+                  padding: 12 * fontSizeMultiplier,
+                  marginBottom: 10 * fontSizeMultiplier,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.devName,
+                  {
+                    color: theme.text,
+                    fontSize: 14 * fontSizeMultiplier,
+                    lineHeight: 18 * fontSizeMultiplier,
+                  },
+                ]}
+              >
+                Sujay Navghare
+              </Text>
+
+              <View style={[styles.linkRow, { marginTop: 6 * fontSizeMultiplier }]}>
+                <TouchableOpacity
+                  onPress={() =>
+                    Linking.openURL(
+                      "https://www.linkedin.com/in/sujaynavghare"
+                    )
+                  }
+                >
+                  <Text
+                    style={[
+                      styles.devLink,
+                      { fontSize: 13 * fontSizeMultiplier, marginTop: 4 * fontSizeMultiplier },
+                    ]}
+                  >
+                    LinkedIn
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() =>
+                    Linking.openURL(
+                      "mailto:sujaynavghare31@gmail.com"
+                    )
+                  }
+                >
+                  <Text
+                    style={[
+                      styles.devLink,
+                      { fontSize: 13 * fontSizeMultiplier, marginTop: 4 * fontSizeMultiplier },
+                    ]}
+                  >
+                    Email
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            {/* Footer */}
+            <View
+              style={[
+                styles.devCard,
+                {
+                  backgroundColor: theme.card,
+                  borderColor: theme.border,
+                  padding: 12 * fontSizeMultiplier,
+                  marginBottom: 10 * fontSizeMultiplier,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.devName,
+                  {
+                    color: theme.text,
+                    fontSize: 14 * fontSizeMultiplier,
+                    lineHeight: 18 * fontSizeMultiplier,
+                  },
+                ]}
+              >
+                Built with ❤️ by NSG.ai Labs
+              </Text>
+
+              <TouchableOpacity
+                onPress={() =>
+                  Linking.openURL("mailto:nsg.ailabs@gmail.com")
+                }
+              >
+                <Text
+                  style={{
+                    color: theme.icon,
+                    fontSize: 13 * fontSizeMultiplier,
+                    marginTop: 4 * fontSizeMultiplier,
+                    lineHeight: 18 * fontSizeMultiplier,
+                  }}
+                >
+                  We're just an email away{" "}
+                  <Text
+                    style={[
+                      styles.devLink,
+                      { fontSize: 13 * fontSizeMultiplier },
+                    ]}
+                  >
+                    nsg.ailabs@gmail.com
+                  </Text>
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
@@ -193,17 +350,11 @@ export default function FeedbackScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // padding: 20,
     paddingHorizontal: 20,
     paddingTop: 20,
   },
 
-  topContent: {
-    flex: 1, // 🔥 pushes contact section down properly
-  },
-
   title: {
-    fontSize: 30,
     fontWeight: "bold",
     marginBottom: 20,
   },
@@ -218,6 +369,7 @@ const styles = StyleSheet.create({
   button: {
     padding: 15,
     borderRadius: 10,
+    marginTop: 10,
   },
 
   buttonText: {
@@ -227,12 +379,12 @@ const styles = StyleSheet.create({
   },
 
   contactContainer: {
+    marginTop: 30,
     paddingTop: 15,
     borderTopWidth: 1,
   },
 
   contactTitle: {
-    fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
   },
@@ -245,12 +397,10 @@ const styles = StyleSheet.create({
   },
 
   devName: {
-    fontSize: 14,
     fontWeight: "600",
   },
 
   devLink: {
-    fontSize: 13,
     color: "#4A90E2",
     marginTop: 4,
     fontWeight: "600",
