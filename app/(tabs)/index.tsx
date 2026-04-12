@@ -2,18 +2,18 @@ import { useRouter } from "expo-router";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  useColorScheme,
-  View,
+    ActivityIndicator,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    useColorScheme,
+    View,
 } from "react-native";
 import { Colors } from "../../constants/theme";
 import { useFontSize } from "../../context/FontSizeContext";
 import { db } from "../../firebaseConfig";
-
+// import uploadData from "../../uploadData"; // Uncomment if you need to re-upload data to Firestore (remember to comment out after use to avoid duplicates)
 type Topic = {
   id: string;
   title: string;
@@ -34,17 +34,33 @@ export default function HomeScreen() {
   // ✅ Prevent double fetch (React Strict Mode fix)
   const [fetched, setFetched] = useState(false);
 
+  // uploadData(); // Call the upload function to populate Firestore (remove/comment out after first run)
+  // 📊 Count questions for each topic
+  // const countQuestionsPerTopic = async (topicsData: Topic[]) => {
+  //   try {
+  //     console.log(`\n📚 TOPICS QUESTION COUNT:\n`);
+      
+  //     for (const topic of topicsData) {
+        
+  //       const questionsRef = collection(db, "topics", topic.id, "questions");
+  //       const snapshot = await getDocs(questionsRef);
+  //       const count = snapshot.size;
+        
+  //       console.log(`  ${topic.title}: ${count} questions`);
+  //     }
+      
+  //     console.log(``);
+  //   } catch (error) {
+  //     console.error("Error counting questions:", error);
+  //   }
+  // };
+
   useEffect(() => {
     if (fetched) return;
 
     const fetchTopics = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "topics"));
-        // console.log("RAW Firestore Docs:",
-        //             querySnapshot.docs.map((doc) => ({
-        //               id: doc.id,
-        //               ...doc.data(),
-        //   })));
         let data: Topic[] = querySnapshot.docs.map((doc) => {
           const docData = doc.data();
 
@@ -54,17 +70,25 @@ export default function HomeScreen() {
             icon: docData.icon || undefined,
           };
         });
-// console.log("Mapped Topics:", data);
-        // ✅ Remove duplicates (safety)
-        const uniqueData = Array.from(
-          new Map(data.map((item) => [item.id, item])).values()
-        );
+
+        // ✅ Remove duplicates by ID (safety check)
+        const uniqueIds = new Set<string>();
+        const uniqueData = data.filter((topic) => {
+          if (uniqueIds.has(topic.id)) {
+            return false;
+          }
+          uniqueIds.add(topic.id);
+          return true;
+        });
 
         // ✅ Sort topics (optional but clean UI)
         uniqueData.sort((a, b) => a.title.localeCompare(b.title));
-        // console.log("Fetched topics:", uniqueData);
+
         setTopics(uniqueData);
         setFetched(true);
+        
+        // 📊 Count questions for each topic
+        // countQuestionsPerTopic(uniqueData);
       } catch (err) {
         setError("Failed to load topics");
       } finally {
