@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import {
-  Alert, Linking, StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity, useColorScheme, View
+    Alert, Linking, StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity, useColorScheme, View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../../constants/theme";
+import { useFontSize } from "../../context/FontSizeContext";
 
 export default function FeedbackScreen() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const { fontSizeMultiplier } = useFontSize();
 
   const scheme = useColorScheme();
   const theme = Colors[scheme ?? "light"];
@@ -44,7 +46,7 @@ export default function FeedbackScreen() {
     >
       {/* 🔥 TOP CONTENT */}
       <View style={styles.topContent}>
-        <Text style={[styles.title, { color: theme.text }]}>
+        <Text style={[styles.title, { color: theme.text, fontSize: 30 * fontSizeMultiplier }]}>
           Share Your Thoughts
         </Text>
 
@@ -91,7 +93,7 @@ export default function FeedbackScreen() {
           ]}
           onPress={handleSubmit}
         >
-          <Text style={styles.buttonText}>Submit</Text>
+          <Text style={[styles.buttonText, { fontSize: 16 * fontSizeMultiplier }]}>Submit</Text>
         </TouchableOpacity>
       </View>
 
@@ -102,7 +104,7 @@ export default function FeedbackScreen() {
           { borderTopColor: theme.border },
         ]}
       >
-        <Text style={[styles.contactTitle, { color: theme.text }]}>
+        <Text style={[styles.contactTitle, { color: theme.text, fontSize: 18 * fontSizeMultiplier }]}>
           Contact Us
         </Text>
 
@@ -116,7 +118,7 @@ export default function FeedbackScreen() {
             },
           ]}
         >
-          <Text style={[styles.devName, { color: theme.text }]}>
+          <Text style={[styles.devName, { color: theme.text, fontSize: 14 * fontSizeMultiplier }]}>
             Shubham Ghude
           </Text>
 
@@ -126,7 +128,7 @@ export default function FeedbackScreen() {
                 Linking.openURL("https://www.linkedin.com/in/shubham-ghude")
               }
             >
-              <Text style={styles.devLink}>LinkedIn</Text>
+              <Text style={[styles.devLink, { fontSize: 13 * fontSizeMultiplier }]}>LinkedIn</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -134,7 +136,7 @@ export default function FeedbackScreen() {
                 Linking.openURL("mailto:shubhamghude808@gmail.com")
               }
             >
-              <Text style={styles.devLink}>Email</Text>
+              <Text style={[styles.devLink, { fontSize: 13 * fontSizeMultiplier }]}>Email</Text>
             </TouchableOpacity>
             
           </View>
@@ -150,7 +152,7 @@ export default function FeedbackScreen() {
             },
           ]}
         >
-          <Text style={[styles.devName, { color: theme.text }]}>
+          <Text style={[styles.devName, { color: theme.text, fontSize: 14 * fontSizeMultiplier }]}>
             Sujay Navghare
           </Text>
 
@@ -160,7 +162,7 @@ export default function FeedbackScreen() {
                 Linking.openURL("https://www.linkedin.com/in/sujaynavghare")
               }
             >
-              <Text style={styles.devLink}>LinkedIn</Text>
+              <Text style={[styles.devLink, { fontSize: 13 * fontSizeMultiplier }]}>LinkedIn</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -168,18 +170,18 @@ export default function FeedbackScreen() {
                 Linking.openURL("mailto:sujaynavghare31@gmail.com")
               }
             >
-              <Text style={styles.devLink}>Email</Text>
+              <Text style={[styles.devLink, { fontSize: 13 * fontSizeMultiplier }]}>Email</Text>
             </TouchableOpacity>
           </View>
         </View>
         <View style={[styles.devCard, { backgroundColor: theme.card, borderColor: theme.border }]}>
-          <Text style={[styles.devName, { color: theme.text }]}>
+          <Text style={[styles.devName, { color: theme.text, fontSize: 14 * fontSizeMultiplier }]}>
             Built with ❤️ by NSG.ai Labs
           </Text>
           <TouchableOpacity onPress={() => Linking.openURL("mailto:nsg.aiLabs@gmail.com")}>
-            <Text style={{ color: theme.icon, fontSize: 13, marginTop: 4 }}>
+            <Text style={{ color: theme.icon, fontSize: 13 * fontSizeMultiplier, marginTop: 4 }}>
               We're just an email away{" "}
-              <Text style={styles.devLink}>nsg.ailabs@gmail.com</Text>
+              <Text style={[styles.devLink, { fontSize: 13 * fontSizeMultiplier }]}>nsg.ailabs@gmail.com</Text>
             </Text>
           </TouchableOpacity>
         </View>

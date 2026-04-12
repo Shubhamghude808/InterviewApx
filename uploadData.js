@@ -1,32 +1,34 @@
-import { db } from "./firebaseConfig";
-import { collection, doc, setDoc, addDoc } from "firebase/firestore";
-import { data } from "./constants/data"; // your file
+//Unused file to upload data to Firestore. Run once and then comment this file.
 
-const uploadData = async () => {
-  try {
-    for (const topicName in data) {
-      // 1. Create topic document
-      const topicRef = doc(db, "topics", topicName);
+// import { db } from "./firebaseConfig";
+// import { collection, doc, setDoc, addDoc } from "firebase/firestore";
+// import { data } from "./constants/data"; // your file
 
-      await setDoc(topicRef, {
-        name: topicName,
-      });
+// const uploadData = async () => {
+//   try {
+//     for (const topicName in data) {
+//       // 1. Create topic document
+//       const topicRef = doc(db, "topics", topicName);
 
-      // 2. Add questions as subcollection
-      const questions = data[topicName];
+//       await setDoc(topicRef, {
+//         name: topicName,
+//       });
 
-      for (const item of questions) {
-        await addDoc(collection(topicRef, "questions"), {
-          question: item.question,
-          answer: item.answer,
-        });
-      }
-    }
+//       // 2. Add questions as subcollection
+//       const questions = data[topicName];
 
-    console.log("🔥 Data uploaded successfully");
-  } catch (error) {
-    console.error("❌ Error uploading data:", error);
-  }
-};
+//       for (const item of questions) {
+//         await addDoc(collection(topicRef, "questions"), {
+//           question: item.question,
+//           answer: item.answer,
+//         });
+//       }
+//     }
 
-export default uploadData;
+//     console.log("🔥 Data uploaded successfully");
+//   } catch (error) {
+//     console.error("❌ Error uploading data:", error);
+//   }
+// };
+
+// export default uploadData;

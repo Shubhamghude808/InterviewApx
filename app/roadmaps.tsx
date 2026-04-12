@@ -1,15 +1,17 @@
 import { useRouter } from "expo-router";
 import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  useColorScheme,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    useColorScheme,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../constants/theme";
+import { useFontSize } from "../context/FontSizeContext";
 
 export default function Roadmaps() {
   const router = useRouter();
+  const { fontSizeMultiplier } = useFontSize();
 
   // ✅ THEME SETUP
   const scheme = useColorScheme();
@@ -29,7 +31,7 @@ export default function Roadmaps() {
     <SafeAreaView
       style={[styles.container, { backgroundColor: theme.background }]}
     >
-      <Text style={[styles.title, { color: theme.text }]}>
+      <Text style={[styles.title, { color: theme.text, fontSize: 26 * fontSizeMultiplier }]}>
         Roadmaps
       </Text>
 
@@ -46,7 +48,7 @@ export default function Roadmaps() {
           ]}
           onPress={() => handlePress(item)}
         >
-          <Text style={[styles.text, { color: theme.text }]}>
+          <Text style={[styles.text, { color: theme.text, fontSize: 16 * fontSizeMultiplier }]}>
             {item.toUpperCase()}
           </Text>
         </TouchableOpacity>

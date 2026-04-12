@@ -1,10 +1,12 @@
-import { View, Text, TouchableOpacity, StyleSheet, useColorScheme } from "react-native";
 import { useRouter } from "expo-router";
+import { StyleSheet, Text, TouchableOpacity, useColorScheme } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../constants/theme";
+import { useFontSize } from "../context/FontSizeContext";
 
 export default function QA() {
   const router = useRouter();
+  const { fontSizeMultiplier } = useFontSize();
 
   // ✅ THEME SETUP
   const scheme = useColorScheme();
@@ -14,7 +16,7 @@ export default function QA() {
     <SafeAreaView
       style={[styles.container, { backgroundColor: theme.background }]}
     >
-      <Text style={[styles.title, { color: theme.text }]}>
+      <Text style={[styles.title, { color: theme.text, fontSize: 26 * fontSizeMultiplier }]}>
         Quality Assurance
       </Text>
 
@@ -29,7 +31,7 @@ export default function QA() {
         ]}
         onPress={() => router.push("/roadmapDetail?name=manual")}
       >
-        <Text style={[styles.text, { color: theme.text }]}>
+        <Text style={[styles.text, { color: theme.text, fontSize: 16 * fontSizeMultiplier }]}>
           MANUAL QA
         </Text>
       </TouchableOpacity>
@@ -45,7 +47,7 @@ export default function QA() {
         ]}
         onPress={() => router.push("/roadmapDetail?name=automation")}
       >
-        <Text style={[styles.text, { color: theme.text }]}>
+        <Text style={[styles.text, { color: theme.text, fontSize: 16 * fontSizeMultiplier }]}>
           AUTOMATION QA
         </Text>
       </TouchableOpacity>

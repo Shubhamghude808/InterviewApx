@@ -1,33 +1,34 @@
+import { Ionicons } from "@expo/vector-icons";
 import * as Clipboard from "expo-clipboard";
 import { useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
 import {
   Alert,
   ScrollView,
   StyleSheet,
   Text,
-  View,
-  useColorScheme,
-  TouchableOpacity,
   TextInput,
-  Keyboard,
+  TouchableOpacity,
+  View,
+  useColorScheme
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../constants/theme";
-import { useState, useEffect } from "react";
-import { Ionicons } from "@expo/vector-icons";
+import { useFontSize } from "../context/FontSizeContext";
 
 // 🔥 FIRESTORE
 import {
   collection,
   getDocs,
-  query,
   limit,
+  query,
   startAfter,
 } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 
 export default function TopicScreen() {
   const { name } = useLocalSearchParams();
+  const { fontSizeMultiplier } = useFontSize();
 
   // 🔥 STATE
   const [allQuestions, setAllQuestions] = useState<any[]>([]);
@@ -49,7 +50,7 @@ export default function TopicScreen() {
   try {
     const q = query(
       collection(db, "topics", name as string, "questions"),
-      limit(10)
+      limit(5) // fetch only 5 to get lastDoc for pagination
     );
 
     const snapshot = await getDocs(q);
@@ -86,7 +87,7 @@ export default function TopicScreen() {
       const q = query(
         collection(db, "topics", name as string, "questions"),
         startAfter(currentLastDoc),
-        limit(20) // batch size
+        limit(10) // batch size
       );
 
       const snapshot = await getDocs(q);
@@ -185,7 +186,7 @@ export default function TopicScreen() {
     >
       {/* HEADER */}
       <View style={styles.header}>
-        <Text style={[styles.title, { color: theme.text }]}>
+        <Text style={[styles.title, { color: theme.text, fontSize: 26 * fontSizeMultiplier }]}>
           {name ? name.toString().toUpperCase() : "LOADING..."}
         </Text>
 
@@ -246,7 +247,7 @@ export default function TopicScreen() {
 
               return (
                 <View key={index} style={styles.card}>
-                  <Text style={[styles.question, { color: theme.text }]}>
+                  <Text style={[styles.question, { color: theme.text, fontSize: 16 * fontSizeMultiplier }]}>
                     Q{index + 1}. {item.question}
                   </Text>
 
@@ -254,17 +255,17 @@ export default function TopicScreen() {
                     block.type === "code" ? (
                       <View key={i} style={styles.codeBox}>
                         <View style={styles.codeHeader}>
-                          <Text style={styles.codeLabel}>Code</Text>
+                          <Text style={[styles.codeLabel, { fontSize: 12 * fontSizeMultiplier }]}>Code</Text>
 
                           <Text
-                            style={styles.copyText}
+                            style={[styles.copyText, { fontSize: 12 * fontSizeMultiplier }]}
                             onPress={() => copyCode(block.content)}
                           >
                             Copy
                           </Text>
                         </View>
 
-                        <Text style={styles.codeText}>
+                        <Text style={[styles.codeText, { fontSize: 13 * fontSizeMultiplier }]}>
                           {highlightCode(block.content)}
                         </Text>
                       </View>
@@ -280,7 +281,7 @@ export default function TopicScreen() {
                           },
                         ]}
                       >
-                        <Text style={[styles.answerText, { color: theme.text }]}>
+                        <Text style={[styles.answerText, { color: theme.text, fontSize: 14 * fontSizeMultiplier }]}>
                           {block.content}
                         </Text>
                       </View>
