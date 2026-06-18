@@ -90,8 +90,9 @@ export default function HomeScreen() {
         // 📊 Count questions for each topic
         // countQuestionsPerTopic(uniqueData);
       } catch (err) {
-        setError("Failed to load topics");
-      } finally {
+  console.error(JSON.stringify(err, null, 2));
+  setError("Failed to load topics");
+} finally {
         setLoading(false);
       }
     };

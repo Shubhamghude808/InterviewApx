@@ -25,26 +25,46 @@ export default function FeedbackScreen() {
   const theme = Colors[scheme ?? "light"];
 
   const handleSubmit = async () => {
-    try {
-      const res = await fetch("https://formspree.io/f/mdapkpew", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, message }),
-      });
+  // Check empty fields
+  if (!email.trim() || !message.trim()) {
+    Alert.alert("Missing Information", "Please fill in all fields.");
+    return;
+  }
 
-      if (res.ok) {
-        Alert.alert("Success", "Thank you for your feedback!");
-        setEmail("");
-        setMessage("");
-      } else {
-        Alert.alert("Try again", "Something went wrong!");
-      }
-    } catch {
-      Alert.alert("Error", "Network error");
+  // Email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!emailRegex.test(email.trim())) {
+    Alert.alert(
+      "Invalid Email",
+      "Please enter a valid email address."
+    );
+    return;
+  }
+
+  try {
+    const res = await fetch("https://formspree.io/f/mdapkpew", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email.trim(),
+        message: message.trim(),
+      }),
+    });
+
+    if (res.ok) {
+      Alert.alert("Success", "Thank you for your feedback!");
+      setEmail("");
+      setMessage("");
+    } else {
+      Alert.alert("Try Again", "Something went wrong!");
     }
-  };
+  } catch {
+    Alert.alert("Error", "Network error");
+  }
+};
 
   return (
     <SafeAreaView
